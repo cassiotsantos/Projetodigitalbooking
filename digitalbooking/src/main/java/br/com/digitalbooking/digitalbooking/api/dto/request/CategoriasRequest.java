@@ -15,11 +15,15 @@ import java.util.UUID;
 @Setter
 public class CategoriasRequest {
     @NotBlank
+    private UUID id;
+    @NotBlank
     public String nome;
     @NotEmpty
     public String urlImage;
     @NotBlank
     public String descricao;
+    @NotBlank
     public String qualificacao;
+    @NotBlank
     private LocalDateTime createdAt;
 }
