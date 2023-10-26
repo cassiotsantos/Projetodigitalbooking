@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/digitalbooking.iml" filepath="$PROJECT_DIR$/.idea/digitalbooking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Projetodigitalbooking.iml" filepath="$PROJECT_DIR$/.idea/Projetodigitalbooking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/digitalbooking/digitalbooking.iml" filepath="$PROJECT_DIR$/digitalbooking/digitalbooking.iml" />
     </modules>
   </component>
 </project>
