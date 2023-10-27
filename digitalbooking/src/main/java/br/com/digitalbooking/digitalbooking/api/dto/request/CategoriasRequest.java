@@ -14,16 +14,16 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CategoriasRequest {
-    @NotBlank
+    //@NotBlank
     private UUID id;
-    @NotBlank
+  //  @NotBlank
     public String nome;
-    @NotEmpty
+  //  @NotEmpty
     public String urlImage;
-    @NotBlank
+   // @NotBlank
     public String descricao;
-    @NotBlank
+   // @NotBlank
     public String qualificacao;
-    @NotBlank
+   // @NotBlank
     private LocalDateTime createdAt;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CategoriasServiceImpl implements CategoriasService {
+public class CategoriasServiceImpl  implements CategoriasService{
 
     private final CategoriasRepository categoriasRepository;
     @Autowired
@@ -20,20 +20,24 @@ public class CategoriasServiceImpl implements CategoriasService {
     }
 
     @Override
-    public Categorias criarCategoria(Categorias categorias) {
+    public Categorias criar(Categorias categorias) {
         return this.categoriasRepository.save(categorias);
     }
 
     @Override
     public List<Categorias> buscarCategorias(String termo) {
-        return this.categoriasRepository.findByNameStartingWith(termo);
+        return this.categoriasRepository.findAll();
     }
 
     @Override
     public Categorias buscarCategoriasPorId(UUID id) {
-        try{ return categoriasRepository.findById(id).orElseThrow();}
-        catch (Exception e){ throw new NotFoundException(id);
-     }};
+        return this.categoriasRepository
+                .findById(id)
+                .orElseThrow();
+    }
+
+
+    /*
 
     @Override
     public Categorias atualizarCategoria(UUID id, Categorias categorias) {
@@ -48,4 +52,6 @@ public class CategoriasServiceImpl implements CategoriasService {
         catch(Exception e) {throw new NotFoundException(id);};
 
     }
+
+     */
 }

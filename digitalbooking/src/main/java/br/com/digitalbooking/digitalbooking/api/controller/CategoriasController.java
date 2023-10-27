@@ -1,51 +1,64 @@
 package br.com.digitalbooking.digitalbooking.api.controller;
 
-import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
+
 import br.com.digitalbooking.digitalbooking.api.dto.request.CategoriasRequest;
+import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasListResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("categorias")
-@Tag(name = "Categorias")
-
+@RequestMapping("v1/categorias")
 public class CategoriasController {
-    private final CategoriasService categoriasService;
-    private final ObjectMapper objectMapper;
 
+    private final CategoriasService categoriasService;
 
     @Autowired
-    public CategoriasController(CategoriasService categoriasService, ObjectMapper objectMapper) {
-
+    public CategoriasController(CategoriasService categoriasService) {
         this.categoriasService = categoriasService;
-        this.objectMapper = objectMapper;
-    };
+    }
 
- /*   @PostMapping
-    ResponseEntity<?> criarCategoria(@RequestBody @Valid List<CategoriasRequest> request){
+    //Buscar por ID
 
-        List<Categorias> listaCategorias = new ArrayList<>();
-
-        for (CategoriasRequest requestList : request) {
-            Categorias categorias = objectMapper.convertValue(requestList, Categorias.class);
-            listaCategorias.add(categorias);
-        }
-        return ResponseEntity.ok(categoriasService.criarCategoria(listaCategorias));
-    }*/
+    @GetMapping("{id}")
+    ResponseEntity<CategoriasResponse> buscarCategoriasPorId(@PathVariable UUID id){
+        Categorias categorias = categoriasService.buscarCategoriasPorId(id);
+        CategoriasResponse response = categoriasResponseByCategorias(categorias);
+        return ResponseEntity.ok().build();
+    }
 
 
+
+    //Buscar todos por termo
+    @GetMapping
+    ResponseEntity<CategoriasWrapperResponse>buscarCategorias(@RequestParam String termo){
+        List<Categorias> categorias = categoriasService.buscarCategorias(termo);
+        CategoriasWrapperResponse categoriasWrapperResponse = new CategoriasWrapperResponse();
+        categoriasWrapperResponse.setCategorias(
+                categorias.stream()
+                        .map(categoria ->{
+                            CategoriasListResponse categoriasListResponse = new CategoriasListResponse();
+                            categoriasListResponse.setId(categoria.getId());
+                            categoriasListResponse.setNome(categoria.getNome());
+                            categoriasListResponse.setUrlImage(categoria.getUrlImage());
+                            categoriasListResponse.setDescricao(categoria.getDescricao());
+                            return categoriasListResponse;
+                        }).toList());
+        return ResponseEntity.ok(categoriasWrapperResponse);
+
+    }
+
+    //método Criar
     @PostMapping
-    ResponseEntity<?> criarCategoria(@RequestBody @Valid CategoriasRequest request) {
+    ResponseEntity<UUID> criarCategorias(@RequestBody @Valid CategoriasRequest request) {
 
         Categorias categorias = new Categorias();
         categorias.setId(request.getId());
@@ -53,55 +66,20 @@ public class CategoriasController {
         categorias.setUrlImage(request.getUrlImage());
         categorias.setDescricao(request.getDescricao());
 
-        Categorias categoriaCriada = categoriasService.criarCategoria(categorias);
+        Categorias categoriaCriada = categoriasService.criar(categorias);
         return ResponseEntity.ok(categoriaCriada.getId());
-
     }
 
-
-
-    @GetMapping("{id}")
-    ResponseEntity<CategoriasResponse> buscarCategoriasPorId(@PathVariable UUID id){
-        Categorias categorias = categoriasService.buscarCategoriasPorId(id);
-        CategoriasResponse response = categoriasResponseByCategoria(categorias);
-        return ResponseEntity.ok(response);
-    }
-
-    @PutMapping("{id}")
-    ResponseEntity<?>atualizarCategorias(@PathVariable UUID id,@RequestBody @Valid CategoriasRequest request){
-
-        Categorias categorias = categoriasService.buscarCategoriasPorId(id);
-        categorias.setId(categorias.getId());
-        categorias.setNome(categorias.getNome());
-        categorias.setUrlImage(categorias.getUrlImage());
-        categorias.setDescricao(categorias.getDescricao());
-
-
-        Categorias atualizarCategorias = categoriasService.atualizarCategoria(id, categorias);
-        return ResponseEntity.ok(atualizarCategorias);
-    }
-
-
-    @DeleteMapping("{id}")
-    ResponseEntity<Void> deletarCategoria(@PathVariable UUID id){
-        categoriasService.deletarCategoria(id);
-        return ResponseEntity.ok().build();
-    }
-
-
-    private CategoriasResponse categoriasResponseByCategoria(Categorias categorias) {
-
+    private CategoriasResponse categoriasResponseByCategorias(Categorias categorias) {
         CategoriasResponse categoriasResponse = new CategoriasResponse();
         categoriasResponse.setId(categorias.getId());
         categoriasResponse.setNome(categorias.getNome());
         categoriasResponse.setUrlImage(categorias.getUrlImage());
         categoriasResponse.setDescricao(categorias.getDescricao());
-
+        categoriasResponse.setQualificacao(categorias.getQualificacao());
 
         return categoriasResponse;
+
     }
-
-
-
 
 }
