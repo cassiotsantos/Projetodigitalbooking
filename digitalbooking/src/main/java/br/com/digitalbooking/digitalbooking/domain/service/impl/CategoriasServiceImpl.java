@@ -1,6 +1,7 @@
 package br.com.digitalbooking.digitalbooking.domain.service.impl;
 
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
+import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.repository.CategoriasRepository;
 import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,6 @@ public class CategoriasServiceImpl implements CategoriasService {
   }
 
 
-    /*
-
     @Override
     public Categorias atualizarCategoria(UUID id, Categorias categorias) {
         try{ categoriasRepository.findById(id).orElseThrow();
@@ -53,5 +52,5 @@ public class CategoriasServiceImpl implements CategoriasService {
 
     }
 
-     */
+
 }

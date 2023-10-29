@@ -7,6 +7,7 @@ import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/categorias")
+@Tag(name = "Categorias" )
 public class CategoriasController {
-
   private final CategoriasService categoriasService;
 
   @Autowired
@@ -85,4 +86,25 @@ public class CategoriasController {
     return ResponseEntity.status(HttpStatus.CREATED).body(categoriaCriada.getId());
   }
 
+  //Método atualizar
+  @PutMapping("id")
+  ResponseEntity<?>atualizarCategoria(@PathVariable UUID id, @RequestBody @Valid CategoriasRequest request){
+
+    Categorias categorias =categoriasService.buscarCategoriasPorId(id);
+    categorias.setNome(request.getNome());
+    categorias.setDescricao(request.getDescricao());
+    categorias.setUrlImage(request.getUrlImage());
+    categorias.setQualificacao(request.getQualificacao());
+
+    Categorias atualizarCategoria = categoriasService.atualizarCategoria(id, categorias);
+    return ResponseEntity.ok(atualizarCategoria);
+
+  }
+
+  //Método deletar
+  @DeleteMapping("{id}")
+  ResponseEntity<Void> deletarCategoria(@PathVariable UUID id){
+    categoriasService.deletarCategoria(id);
+    return ResponseEntity.ok().build();
+  }
 }

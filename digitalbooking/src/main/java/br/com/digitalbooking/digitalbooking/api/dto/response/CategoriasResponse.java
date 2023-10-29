@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-
 public class CategoriasResponse {
     private UUID id;
     public String nome;

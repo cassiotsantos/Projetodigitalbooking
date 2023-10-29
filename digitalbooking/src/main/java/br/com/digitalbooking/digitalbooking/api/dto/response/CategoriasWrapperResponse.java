@@ -7,8 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-
 public class CategoriasWrapperResponse {
-
     private List<CategoriasListResponse> categorias;
 }
