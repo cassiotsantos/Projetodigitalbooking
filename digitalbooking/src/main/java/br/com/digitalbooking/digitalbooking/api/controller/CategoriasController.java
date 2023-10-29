@@ -79,6 +79,7 @@ public class CategoriasController {
     categorias.setNome(request.getNome());
     categorias.setUrlImage(request.getUrlImage());
     categorias.setDescricao(request.getDescricao());
+    categorias.setQualificacao(request.getQualificacao());
 
     Categorias categoriaCriada = categoriasService.criar(categorias);
     return ResponseEntity.status(HttpStatus.CREATED).body(categoriaCriada.getId());
