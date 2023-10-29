@@ -14,16 +14,27 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="categorias")
+@Table(name = "categorias")
 public class Categorias {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
-    public String nome;
-    public String urlImage;
-    public String descricao;
-    public String qualificacao;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+  public String nome;
+  public String urlImage;
+  public String descricao;
+  public String qualificacao;
+  @Id
+  @GeneratedValue(generator = "UUID")
+  private UUID id;
+  @CreationTimestamp
+  private LocalDateTime createdAt;
 
+  public Categorias(String nome, String urlImage, String descricao, String qualificacao, UUID id, LocalDateTime createdAt) {
+    this.nome = nome;
+    this.urlImage = urlImage;
+    this.descricao = descricao;
+    this.qualificacao = qualificacao;
+    this.id = id;
+    this.createdAt = createdAt;
+  }
+
+  public Categorias() {
+  }
 }

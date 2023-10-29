@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface CategoriasRepository extends JpaRepository <Categorias,UUID> {
-    //List<Categorias> findByNameStartingWith(String nome);
+public interface CategoriasRepository extends JpaRepository<Categorias, UUID> {
+  List<Categorias> findByNomeStartingWith(String nome);
 }

@@ -1,7 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.service.impl;
 
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
-import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.repository.CategoriasRepository;
 import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,30 +10,31 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CategoriasServiceImpl  implements CategoriasService{
+public class CategoriasServiceImpl implements CategoriasService {
 
-    private final CategoriasRepository categoriasRepository;
-    @Autowired
-    public CategoriasServiceImpl(CategoriasRepository categoriasRepository) {
-        this.categoriasRepository = categoriasRepository;
-    }
+  private final CategoriasRepository categoriasRepository;
 
-    @Override
-    public Categorias criar(Categorias categorias) {
-        return this.categoriasRepository.save(categorias);
-    }
+  @Autowired
+  public CategoriasServiceImpl(CategoriasRepository categoriasRepository) {
+    this.categoriasRepository = categoriasRepository;
+  }
 
-    @Override
-    public List<Categorias> buscarCategorias(String termo) {
-        return this.categoriasRepository.findAll();
-    }
+  @Override
+  public Categorias criar(Categorias categorias) {
+    return this.categoriasRepository.save(categorias);
+  }
 
-    @Override
-    public Categorias buscarCategoriasPorId(UUID id) {
-        return this.categoriasRepository
-                .findById(id)
-                .orElseThrow();
-    }
+  @Override
+  public List<Categorias> buscarCategorias(String termo) {
+    return this.categoriasRepository.findByNomeStartingWith(termo);
+  }
+
+  @Override
+  public Categorias buscarCategoriasPorId(UUID id) {
+    return this.categoriasRepository
+        .findById(id)
+        .orElseThrow();
+  }
 
 
     /*
