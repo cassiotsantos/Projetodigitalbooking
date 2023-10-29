@@ -22,6 +22,7 @@ public class CategoriasServiceImpl implements CategoriasService {
 
   @Override
   public Categorias criar(Categorias categorias) {
+
     return this.categoriasRepository.save(categorias);
   }
 
@@ -32,9 +33,8 @@ public class CategoriasServiceImpl implements CategoriasService {
 
   @Override
   public Categorias buscarCategoriasPorId(UUID id) {
-    return this.categoriasRepository
-        .findById(id)
-        .orElseThrow();
+      try{ return categoriasRepository.findById(id).orElseThrow();}
+      catch (Exception e){ throw new NotFoundException(id);}
   }
 
 
