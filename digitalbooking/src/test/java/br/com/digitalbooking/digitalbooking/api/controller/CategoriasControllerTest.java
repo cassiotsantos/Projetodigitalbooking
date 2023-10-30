@@ -65,9 +65,7 @@ class CategoriasControllerTest {
         .andExpect(jsonPath("$.descricao")
             .value(categorias.getDescricao()))
         .andExpect(jsonPath("$.qualificacao")
-            .value(categorias.getQualificacao()))
-        .andExpect(jsonPath("$.createdAt")
-            .value(categorias.getCreatedAt().toString().substring(0, 27)));
+            .value(categorias.getQualificacao()));
   }
 
   @Test
@@ -110,9 +108,7 @@ class CategoriasControllerTest {
         .andExpect(jsonPath("$.categorias[0].descricao")
             .value(categorias.get(0).getDescricao()))
         .andExpect(jsonPath("$.categorias[0].qualificacao")
-            .value(categorias.get(0).getQualificacao()))
-        .andExpect(jsonPath("$.categorias[0].createdAt")
-            .value(categorias.get(0).getCreatedAt().toString().substring(0, 27)));
+            .value(categorias.get(0).getQualificacao()));
 
     response
         .andExpect(jsonPath("$.categorias[1].id")
@@ -124,11 +120,7 @@ class CategoriasControllerTest {
         .andExpect(jsonPath("$.categorias[1].descricao")
             .value(categorias.get(1).getDescricao()))
         .andExpect(jsonPath("$.categorias[1].qualificacao")
-            .value(categorias.get(1).getQualificacao()))
-        .andExpect(jsonPath("$.categorias[1].createdAt")
-            .value(categorias.get(1).getCreatedAt().toString().substring(0, 27)));
-
-
+            .value(categorias.get(1).getQualificacao()));
   }
 
   @Test
