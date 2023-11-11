@@ -9,5 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface CategoriasRepository extends JpaRepository<Categorias, UUID> {
+
   List<Categorias> findByNomeStartingWith(String termo);
 }
