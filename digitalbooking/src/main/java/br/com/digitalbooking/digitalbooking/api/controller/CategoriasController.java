@@ -2,9 +2,9 @@ package br.com.digitalbooking.digitalbooking.api.controller;
 
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.CategoriasRequest;
-import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasListResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CategoriasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
-import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasWrapperResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CategoriasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
 import io.swagger.v3.oas.annotations.tags.Tag;

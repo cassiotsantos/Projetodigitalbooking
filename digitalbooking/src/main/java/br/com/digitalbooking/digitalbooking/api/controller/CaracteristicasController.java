@@ -3,6 +3,8 @@ package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.CaracteristicasRequest;
 import br.com.digitalbooking.digitalbooking.api.dto.response.*;
+import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CaracteristicasListResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CaracteristicasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
 import br.com.digitalbooking.digitalbooking.domain.service.CaracteristicasService;
 import io.swagger.v3.oas.annotations.tags.Tag;

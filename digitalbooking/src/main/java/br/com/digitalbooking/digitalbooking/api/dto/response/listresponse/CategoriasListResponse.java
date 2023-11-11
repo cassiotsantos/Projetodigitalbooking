@@ -1,4 +1,4 @@
-package br.com.digitalbooking.digitalbooking.api.dto.response;
+package br.com.digitalbooking.digitalbooking.api.dto.response.listresponse;
 
 import lombok.Getter;
 import lombok.Setter;
