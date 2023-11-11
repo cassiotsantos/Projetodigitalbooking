@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -23,6 +24,7 @@ public class Produtos {
     public String descricao;
     public String latitude;
     public String longitude;
+    private LocalDateTime createdAt;
 
     public Produtos() {
     }
