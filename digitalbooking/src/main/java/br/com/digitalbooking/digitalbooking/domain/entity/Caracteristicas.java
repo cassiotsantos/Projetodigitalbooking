@@ -12,22 +12,22 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "caracteristica")
-
+@Table(name = "caracteristicas")
 public class Caracteristicas {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
     public String nome;
     public String icone;
 
+    @Id
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
+
+    public Caracteristicas() {
+
+    }
 
     public Caracteristicas(UUID id, String nome, String icone) {
         this.id = id;
         this.nome = nome;
         this.icone = icone;
-    }
-
-    public Caracteristicas() {
     }
 }
