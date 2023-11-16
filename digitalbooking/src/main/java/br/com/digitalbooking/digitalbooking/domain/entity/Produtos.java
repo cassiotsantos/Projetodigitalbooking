@@ -1,9 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +17,37 @@ public class Produtos {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
-    public String nome;
-    public String descricao;
-    public String latitude;
-    public String longitude;
+    private String nome;
+    private String descricao;
+    @OneToMany
+    @JoinColumn(
+            name= "imagens_id",
+            foreignKey =
+            @ForeignKey(name = "fk_produto_imagens")
+    )
+    private Imagens imagens;
+    @ManyToMany
+    @JoinColumn(
+            name ="caracteristicas_id",
+            foreignKey =
+            @ForeignKey(name = "fk_produto_caracteristicas")
+    )
+    private Caracteristicas caracteristicas;
+    @ManyToOne
+    @JoinColumn(
+            name="",
+            foreignKey =
+            @ForeignKey(name = "fk_produto_cidade")
+    )
+    private Cidades cidades;
+    @ManyToOne
+    @JoinColumn( name="categorias_id",
+            foreignKey =
+            @ForeignKey(name ="fk_produtos_categorias")
+    )
+    private Categorias categorias;
+    private String latitude;
+    private String longitude;
     private LocalDateTime createdAt;
 
     public Produtos() {

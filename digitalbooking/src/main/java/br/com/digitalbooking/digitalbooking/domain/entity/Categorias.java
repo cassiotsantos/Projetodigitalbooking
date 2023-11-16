@@ -1,9 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,13 +13,13 @@ import java.util.UUID;
 @Entity
 @Table(name = "categorias")
 public class Categorias {
-  public String nome;
-  public String urlImage;
-  public String descricao;
-  public String qualificacao;
   @Id
   @GeneratedValue(generator = "UUID")
   private UUID id;
+  private String nome;
+  private String urlImage;
+  private String descricao;
+  private String qualificacao;
   @CreationTimestamp
   private LocalDateTime createdAt;
 

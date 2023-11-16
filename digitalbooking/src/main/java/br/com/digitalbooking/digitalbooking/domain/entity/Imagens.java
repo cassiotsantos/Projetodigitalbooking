@@ -18,8 +18,8 @@ public class Imagens {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
-    public String titulo;
-    public String url;
+    private String titulo;
+    private String url;
 
     public Imagens(UUID id, String titulo, String url) {
         this.id = id;
