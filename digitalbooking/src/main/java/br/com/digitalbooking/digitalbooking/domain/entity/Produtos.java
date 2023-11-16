@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class Produtos {
             foreignKey =
             @ForeignKey(name = "fk_produto_imagens")
     )
-    private Imagens imagens;
+    private List<Imagens> imagensList;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name =" produtos_caracteristicas",
                 joinColumns =
