@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/caracteristicas")
+@RequestMapping("caracteristicas")
 @Tag(name = "Caracteristicas" )
 public class CaracteristicasController {
   private final CaracteristicasService caracteristicasService;

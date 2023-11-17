@@ -26,4 +26,7 @@ public class CidadesServiceImpl implements CidadesService {
     public List<Cidades> buscarCidades(String termo) {
         return cidadesRepository.findByNomeStartingWith(termo);
     }
+
+    @Override
+    public List<Cidades> buscarTodasCidades() { return cidadesRepository.findAll();}
 }
