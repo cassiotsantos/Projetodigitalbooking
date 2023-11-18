@@ -17,6 +17,7 @@ public class ProdutosRequest {
     private String nome;
     @NotBlank
     private String descricao;
+    private Categorias categorias;
     private String latitude;
     private String longitude;
     private LocalDateTime createdAt;
