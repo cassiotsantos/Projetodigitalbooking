@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface ProdutosRepository extends JpaRepository<Produtos, UUID> {
 
 List<Produtos> findByNomeStartingWith (String termo);
-List<Produtos> findByCategoriasId(UUID id);
+List<Produtos> findByCategoriasContaining (String nome);
 }
