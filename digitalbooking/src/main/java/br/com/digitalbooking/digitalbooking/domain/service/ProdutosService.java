@@ -10,7 +10,7 @@ public interface ProdutosService {
     Produtos criarProduto (Produtos produtos);
     List<Produtos> buscarProdutos(String termo);
     Produtos buscarProdutoPorId (UUID id);
-    List<Produtos> listaProdutoPorCategoria (String nomeCategoria);
+    List<Produtos> listaProdutoPorCategoria (UUID id);
     Produtos atualizarProduto (UUID id, Produtos produtos);
     void deletarProduto(UUID id);
 }

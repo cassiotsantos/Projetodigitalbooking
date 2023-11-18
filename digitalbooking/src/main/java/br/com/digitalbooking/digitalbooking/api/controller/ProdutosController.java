@@ -100,8 +100,8 @@ public class ProdutosController {
             return ResponseEntity.ok(atualizarProduto);        }
 
         @GetMapping("/porcategoria/{categoria}")
-        ResponseEntity<ProdutosWrapperResponse> listaProdutoPorCategoria(@PathVariable String nomeCategoria) {
-                List<Produtos> produtos = produtosService.listaProdutoPorCategoria(nomeCategoria);
+        ResponseEntity<ProdutosWrapperResponse> listaProdutoPorCategoria(@PathVariable UUID id) {
+                List<Produtos> produtos = produtosService.listaProdutoPorCategoria(id);
                 ProdutosWrapperResponse produtosWrapperResponse = new ProdutosWrapperResponse();
                 produtosWrapperResponse.setProdutos(
                         produtos.stream()

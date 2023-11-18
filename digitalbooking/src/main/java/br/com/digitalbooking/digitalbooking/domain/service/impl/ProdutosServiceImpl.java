@@ -33,8 +33,8 @@ public class ProdutosServiceImpl implements ProdutosService {
     }
 
     @Override
-    public List<Produtos> listaProdutoPorCategoria(String nomeCategoria) {
-        return produtosRepository.findByCategorias(nomeCategoria);
+    public List<Produtos> listaProdutoPorCategoria(UUID id) {
+        return produtosRepository.findByCategoriasId(id);
     }
 
     @Override
