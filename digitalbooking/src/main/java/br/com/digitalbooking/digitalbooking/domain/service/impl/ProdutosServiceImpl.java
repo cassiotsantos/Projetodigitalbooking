@@ -34,7 +34,7 @@ public class ProdutosServiceImpl implements ProdutosService {
 
     @Override
     public List<Produtos> listaProdutoPorCategoria(UUID id) {
-        return produtosRepository.findByCategorias(id);
+        return produtosRepository.findByCategoriasId(id);
     }
 
     @Override
