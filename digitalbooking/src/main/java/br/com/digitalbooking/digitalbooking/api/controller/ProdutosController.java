@@ -99,7 +99,7 @@ public class ProdutosController {
             Produtos atualizarProduto = produtosService.atualizarProduto(id,produtos);
             return ResponseEntity.ok(atualizarProduto);        }
 
-        @GetMapping("{categoria}")
+        @GetMapping("/porcategoria/{categoria}")
         ResponseEntity<ProdutosWrapperResponse> listaProdutoPorCategoria(@PathVariable UUID id) {
                 List<Produtos> produtos = produtosService.listaProdutoPorCategoria(id);
                 ProdutosWrapperResponse produtosWrapperResponse = new ProdutosWrapperResponse();
