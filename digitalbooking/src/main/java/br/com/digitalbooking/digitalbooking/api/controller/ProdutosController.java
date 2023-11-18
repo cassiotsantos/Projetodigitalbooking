@@ -97,12 +97,25 @@ public class ProdutosController {
             produtos.setLongitude(request.getLongitude());
 
             Produtos atualizarProduto = produtosService.atualizarProduto(id,produtos);
-            return ResponseEntity.ok(atualizarProduto);
-        }
+            return ResponseEntity.ok(atualizarProduto);        }
 
-        @GetMapping("/produtos/{categoria}")
-        ResponseEntity<Produtos> listaProdutoPorCategoria(@PathVariable Categorias categorias) {
-            return (ResponseEntity<Produtos>) produtosService.listaProdutoPorCategoria(categorias);
+        @GetMapping("{categoria}")
+        ResponseEntity<ProdutosWrapperResponse> listaProdutoPorCategoria(@PathVariable UUID id) {
+                List<Produtos> produtos = produtosService.listaProdutoPorCategoria(id);
+                ProdutosWrapperResponse produtosWrapperResponse = new ProdutosWrapperResponse();
+                produtosWrapperResponse.setProdutos(
+                        produtos.stream()
+                                .map(produto -> {
+                                    ProdutosListResponse produtosListResponse = new ProdutosListResponse();
+                                    produtosListResponse.setId(produto.getId());
+                                    produtosListResponse.setNome(produto.getNome());
+                                    produtosListResponse.setDescricao(produto.getDescricao());
+                                    produtosListResponse.setLatitude(produto.getLatitude());
+                                    produtosListResponse.setLongitude(produto.getLongitude());
+                                    return produtosListResponse;
+                                }).toList());
+                return ResponseEntity.ok(produtosWrapperResponse);
+
         }
 
 
