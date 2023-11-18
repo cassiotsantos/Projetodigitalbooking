@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("produtos")
+@RequestMapping("v1/produtos")
 @Tag(name = "Produtos" )
 
 public class ProdutosController {

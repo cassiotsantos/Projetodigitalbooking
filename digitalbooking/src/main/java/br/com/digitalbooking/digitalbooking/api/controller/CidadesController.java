@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("cidades")
+@RequestMapping("v1/cidades")
 @Tag(name="Cidades")
 
 public class CidadesController {
