@@ -1,5 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.service;
 
+import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 
 import java.util.List;
@@ -9,6 +10,7 @@ public interface ProdutosService {
     Produtos criarProduto (Produtos produtos);
     List<Produtos> buscarProdutos(String termo);
     Produtos buscarProdutoPorId (UUID id);
+    List<Produtos> listaProdutoPorCategoria (Categorias categorias);
     Produtos atualizarProduto (UUID id, Produtos produtos);
     void deletarProduto(UUID id);
 }

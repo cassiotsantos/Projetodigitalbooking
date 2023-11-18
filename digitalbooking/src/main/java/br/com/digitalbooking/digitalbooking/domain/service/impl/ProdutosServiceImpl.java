@@ -1,5 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.service.impl;
 
+import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.repository.ProdutosRepository;
@@ -29,6 +30,11 @@ public class ProdutosServiceImpl implements ProdutosService {
     public Produtos buscarProdutoPorId(UUID id) {
         try{ return produtosRepository.findById(id).orElseThrow();}
         catch (Exception e){ throw new NotFoundException(id);}
+    }
+
+    @Override
+    public List<Produtos> listaProdutoPorCategoria(Categorias categorias) {
+        return produtosRepository.findByCategorias(categorias);
     }
 
     @Override
