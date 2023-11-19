@@ -10,6 +10,6 @@ import java.util.UUID;
 @Setter
 public class CidadesListResponse {
     private UUID id;
-    public String nome;
-    public String pais;
+    private String nome;
+    private String pais;
 }

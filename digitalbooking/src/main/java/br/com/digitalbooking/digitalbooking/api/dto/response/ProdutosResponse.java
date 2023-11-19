@@ -13,10 +13,10 @@ import java.util.UUID;
 
 public class ProdutosResponse {
     private UUID id;
-    public String nome;
-    public String descricao;
+    private String nome;
+    private String descricao;
     private Categorias categorias;
-    public String latitude;
-    public String longitude;
+    private String latitude;
+    private String longitude;
     private LocalDateTime createdAt;
 }

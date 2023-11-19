@@ -10,6 +10,6 @@ import java.util.UUID;
 
 public class ImagensResponse {
     private UUID id;
-    public String titulo;
-    public String url;
+    private String titulo;
+    private String url;
 }

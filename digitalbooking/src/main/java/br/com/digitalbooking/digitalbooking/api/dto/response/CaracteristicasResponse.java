@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 public class CaracteristicasResponse {
     private UUID id;
-    public String nome;
-    public String icone;
+    private String nome;
+    private String icone;
 
 }

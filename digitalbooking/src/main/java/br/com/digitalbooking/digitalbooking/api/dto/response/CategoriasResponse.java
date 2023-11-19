@@ -12,10 +12,10 @@ import java.util.UUID;
 @Setter
 public class CategoriasResponse {
     private UUID id;
-    public String nome;
-    public String urlImage;
-    public String descricao;
-    public String qualificacao;
+    private String nome;
+    private String urlImage;
+    private String descricao;
+
     private LocalDateTime createdAt;
 
 
