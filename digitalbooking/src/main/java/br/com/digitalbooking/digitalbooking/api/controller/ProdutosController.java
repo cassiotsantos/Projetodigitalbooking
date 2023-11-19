@@ -4,8 +4,6 @@ import br.com.digitalbooking.digitalbooking.api.dto.request.ProdutosRequest;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ProdutosListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ProdutosWrapperResponse;
-import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
-import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -89,7 +87,7 @@ public class ProdutosController {
 
         //Método atualizar
         @PutMapping("id")
-        ResponseEntity<ProdutosResponse>atualizarProduto(@PathVariable UUID id, @RequestBody @Valid ProdutosRequest request){
+        ResponseEntity<Produtos> atualizarProduto(@PathVariable UUID id, @RequestBody @Valid ProdutosRequest request){
 
             Produtos produtos = produtosService.buscarProdutoPorId(id);
 
@@ -97,10 +95,6 @@ public class ProdutosController {
             produtos.setDescricao(request.getDescricao());
             produtos.setLatitude(request.getLatitude());
             produtos.setLongitude(request.getLongitude());
-
-
-
-
 
 
             Produtos atualizarProduto = produtosService.atualizarProduto(id,produtos);

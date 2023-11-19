@@ -1,5 +1,6 @@
 package br.com.digitalbooking.digitalbooking.api.dto.response.listresponse;
 
+import br.com.digitalbooking.digitalbooking.domain.entity.EnumQualificacao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,6 @@ public class CategoriasListResponse {
     private String nome;
     private String urlImage;
     private String descricao;
-    private String qualificacao;
+    private EnumQualificacao qualificacao;
     private LocalDateTime createdAt;
 }

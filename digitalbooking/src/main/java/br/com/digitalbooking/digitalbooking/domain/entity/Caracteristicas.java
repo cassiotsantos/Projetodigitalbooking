@@ -21,8 +21,6 @@ public class Caracteristicas {
     private UUID id;
     private String nome;
     private String icone;
-    private EnumQualificacao qualificacao;
-
     public Caracteristicas() {
 
     }

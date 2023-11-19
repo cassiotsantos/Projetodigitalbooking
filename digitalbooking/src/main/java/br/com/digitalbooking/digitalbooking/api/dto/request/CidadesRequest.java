@@ -12,9 +12,8 @@ import java.util.UUID;
 public class CidadesRequest {
 
     private UUID id;
-
     @NotBlank
-    private String nome;
+    private String cidade;
     @NotBlank
     private String pais;
 }

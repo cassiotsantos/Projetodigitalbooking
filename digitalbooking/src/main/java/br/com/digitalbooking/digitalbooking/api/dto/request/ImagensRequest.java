@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-
 public class ImagensRequest {
 
     @NotBlank
