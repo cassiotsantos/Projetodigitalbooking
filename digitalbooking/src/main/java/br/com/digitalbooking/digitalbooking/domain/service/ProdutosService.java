@@ -11,6 +11,7 @@ public interface ProdutosService {
     List<Produtos> buscarProdutos(String termo);
     Produtos buscarProdutoPorId (UUID id);
     List<Produtos> listaProdutoPorCategoria (String nome);
+    List<Produtos> listaProdutoPorCidade (String nome);
     Produtos atualizarProduto (UUID id, Produtos produtos);
     void deletarProduto(UUID id);
 }

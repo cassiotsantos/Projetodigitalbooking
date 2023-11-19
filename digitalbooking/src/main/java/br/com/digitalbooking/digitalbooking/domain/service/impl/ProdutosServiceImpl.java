@@ -34,7 +34,12 @@ public class ProdutosServiceImpl implements ProdutosService {
 
     @Override
     public List<Produtos> listaProdutoPorCategoria(String nome) {
-        return produtosRepository.findByCategoriasContaining(nome);
+        return produtosRepository.findByCategoriasNome(nome);
+    }
+
+    @Override
+    public List<Produtos> listaProdutoPorCidade(String nome) {
+        return produtosRepository.findByCidadeNome(nome);
     }
 
 

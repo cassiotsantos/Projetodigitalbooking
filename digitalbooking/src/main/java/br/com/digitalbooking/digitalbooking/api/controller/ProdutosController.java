@@ -99,6 +99,7 @@ public class ProdutosController {
             Produtos atualizarProduto = produtosService.atualizarProduto(id,produtos);
             return ResponseEntity.ok(atualizarProduto);        }
 
+        // Método de buscar Produto por categoria
         @GetMapping("/porcategoria/{nome}")
         ResponseEntity<ProdutosWrapperResponse> listaProdutoPorCategoria(@PathVariable String nome) {
 
@@ -120,6 +121,25 @@ public class ProdutosController {
 
         }
 
+        // método busca produto por cidade
+        @GetMapping("/porcidade/{nome}")
+        ResponseEntity<ProdutosWrapperResponse> listaProdutoPorCidade(@PathVariable String nome) {
+            List<Produtos> produtos = produtosService.listaProdutoPorCidade(nome);
+            ProdutosWrapperResponse produtosWrapperResponse = new ProdutosWrapperResponse();
+            produtosWrapperResponse.setProdutos(
+                    produtos.stream()
+                            .map(produto -> {
+                                ProdutosListResponse produtosListResponse = new ProdutosListResponse();
+                                produtosListResponse.setId(produto.getId());
+                                produtosListResponse.setNome(produto.getNome());
+                                produtosListResponse.setCategorias(produto.getCategorias());
+                                produtosListResponse.setDescricao(produto.getDescricao());
+                                produtosListResponse.setLatitude(produto.getLatitude());
+                                produtosListResponse.setLongitude(produto.getLongitude());
+                                return produtosListResponse;
+                            }).toList());
+            return ResponseEntity.ok(produtosWrapperResponse);
+        }
 
         //Método deletar
         @DeleteMapping("{id}")
