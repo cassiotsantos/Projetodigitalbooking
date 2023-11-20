@@ -1,16 +1,15 @@
 package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.ProdutosRequest;
-import br.com.digitalbooking.digitalbooking.api.dto.response.CaracteristicasResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CidadesResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ProdutosListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ProdutosWrapperResponse;
-import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
 import br.com.digitalbooking.digitalbooking.domain.entity.Cidades;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/produtos")
 @Tag(name = "Produtos" )
 public class ProdutosController {
-
+        private final ObjectMapper objectMapper;
         private final ProdutosService produtosService;
 
         @Autowired
-        public ProdutosController(ProdutosService produtosService) {
+        public ProdutosController(ObjectMapper objectMapper, ProdutosService produtosService) {
+            this.objectMapper = objectMapper;
             this.produtosService = produtosService;
         }
 
@@ -94,20 +93,14 @@ public class ProdutosController {
         @PostMapping
         ResponseEntity<ProdutosResponse> criarProdutos(@RequestBody @Valid ProdutosRequest request) {
 
-            Produtos produtos = new Produtos();
-            produtos.setId(UUID.randomUUID());
-            produtos.setNome(request.getNome());
-            produtos.setDescricao(request.getDescricao());
-            produtos.setLatitude(request.getLatitude());
-            produtos.setLongitude(request.getLongitude());
-
-            Produtos produtoCriado = produtosService.criarProduto(produtos);
-            ProdutosResponse produtosResponse = produtosResponseByProdutos(produtoCriado);
+            Produtos produtos = objectMapper.convertValue(request, Produtos.class);
+            Produtos produtoCriado = produtosService.criarProduto(produtos, request.getCategoriasId(), request.getCidadesId(), request.getImagensId(), request.getCaracteristicasProdutoId());
+            ProdutosResponse produtosResponse = objectMapper.convertValue(produtoCriado, ProdutosResponse.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(produtosResponse);
         }
 
         //Método atualizar
-        @PutMapping("id")
+       /* @PutMapping("id")
         ResponseEntity<ProdutosResponse> atualizarProduto(@PathVariable UUID id, @RequestBody @Valid ProdutosRequest request){
 
             Produtos produtos = produtosService.buscarProdutoPorId(id);
@@ -125,7 +118,7 @@ public class ProdutosController {
 
             Produtos produtoAtualizado = produtosService.atualizarProduto(id, produtos);
             ProdutosResponse response = produtosResponseByProdutos(produtoAtualizado);
-            return ResponseEntity.ok(response);        }
+            return ResponseEntity.ok(response);        }*/
 
         // Método de buscar Produto por categoria
         @GetMapping("/porcategoria/{nome}")
