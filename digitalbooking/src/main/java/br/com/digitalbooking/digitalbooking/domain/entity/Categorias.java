@@ -16,7 +16,7 @@ import java.util.UUID;
 @Table(name = "categorias")
 public class Categorias {
   @Id
-  @GeneratedValue(generator = "UUID")
+  @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
   private String nome;
   private String urlImage;

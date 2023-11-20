@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Cidades {
 
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
     private String pais;

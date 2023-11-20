@@ -1,18 +1,14 @@
 package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.CidadesRequest;
-import br.com.digitalbooking.digitalbooking.api.dto.response.CaracteristicasResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CidadesResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.ImagensResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CidadesListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CidadesWrapperResponse;
-import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
 import br.com.digitalbooking.digitalbooking.domain.entity.Cidades;
+import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.service.CidadesService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +26,12 @@ import java.util.UUID;
 public class CidadesController {
 
     private final CidadesService cidadesService;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public CidadesController(CidadesService cidadesService) {
+    public CidadesController(CidadesService cidadesService, ObjectMapper objectMapper) {
         this.cidadesService = cidadesService;
+        this.objectMapper = objectMapper;
     }
 
     //Buscar todos por termo
@@ -56,15 +54,35 @@ public class CidadesController {
 
     //método Criar
     @PostMapping
-    ResponseEntity<UUID> criarCidades(@RequestBody @Valid CidadesRequest request) {
+    ResponseEntity<CidadesResponse> criarCidades(@RequestBody @Valid CidadesRequest request) {
 
-        Cidades cidades = new Cidades();
-        cidades.setId(UUID.randomUUID());
-        cidades.setNome(request.getNome());
-        cidades.setPais(request.getPais());
-
-        Cidades cidadesCriada = cidadesService.criarCidades(cidades);
-        return ResponseEntity.status(HttpStatus.CREATED).body(cidadesCriada.getId());
+        Cidades cidades = objectMapper.convertValue(request, Cidades.class);
+        Cidades cidadeCriada = cidadesService.criarCidades(cidades);
+        CidadesResponse cidadesResponse = objectMapper.convertValue(cidades, CidadesResponse.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cidadesResponse);
     }
+
+    @GetMapping("{id}")
+    ResponseEntity<CidadesResponse> buscarCidadePorId (@PathVariable UUID id) {
+
+        Cidades cidades = cidadesService.buscarCidadePorId(id);
+        CidadesResponse response = cidadeResponseBycidade(cidades);
+        return ResponseEntity.ok(response);
+    };
+
+
+    private CidadesResponse cidadeResponseBycidade(Cidades cidades) {
+        CidadesResponse cidadesResponse = new CidadesResponse();
+        cidadesResponse.setId(cidades.getId());
+        cidadesResponse.setNome(cidades.getNome());
+        cidadesResponse.setPais(cidades.getPais());
+
+       return cidadesResponse;
+    }
+
+
+
+
+
 
 }
