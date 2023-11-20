@@ -9,6 +9,6 @@ import java.util.UUID;
 @Setter
 public class CidadesResponse {
     private UUID id;
-    private String cidade;
+    private String nome;
     private String pais;
 }

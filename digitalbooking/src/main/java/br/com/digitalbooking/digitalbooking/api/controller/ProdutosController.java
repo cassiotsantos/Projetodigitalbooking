@@ -1,9 +1,14 @@
 package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.ProdutosRequest;
+import br.com.digitalbooking.digitalbooking.api.dto.response.CaracteristicasResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.CidadesResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ProdutosListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ProdutosWrapperResponse;
+import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
+import br.com.digitalbooking.digitalbooking.domain.entity.Cidades;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,12 +19,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/produtos")
 @Tag(name = "Produtos" )
-
 public class ProdutosController {
 
         private final ProdutosService produtosService;
@@ -45,6 +50,21 @@ public class ProdutosController {
             produtosResponse.setDescricao(produtos.getDescricao());
             produtosResponse.setLatitude(produtos.getLatitude());
             produtosResponse.setLongitude(produtos.getLongitude());
+
+            CidadesResponse cidades = new CidadesResponse();
+            cidades.setId(produtos.getCidades().getId());
+            cidades.setNome(produtos.getCidades().getNome());
+            cidades.setPais(produtos.getCidades().getPais());
+
+            CategoriasResponse categorias = new CategoriasResponse();
+            categorias.setId(produtos.getCategorias().getId());
+            categorias.setNome(produtos.getCategorias().getNome());
+            categorias.setUrlImage(produtos.getCategorias().getUrlImage());
+            categorias.setQualificacao(produtos.getCategorias().getQualificacao());
+
+            produtosResponse.setCidades(cidades);
+            produtosResponse.setCategorias(categorias);
+            produtosResponse.setCaracteristicas(produtos.getProdutosCaracteristicas());
 
             return produtosResponse;
 
@@ -72,7 +92,7 @@ public class ProdutosController {
 
         //método Criar
         @PostMapping
-        ResponseEntity<UUID> criarProdutos(@RequestBody @Valid ProdutosRequest request) {
+        ResponseEntity<ProdutosResponse> criarProdutos(@RequestBody @Valid ProdutosRequest request) {
 
             Produtos produtos = new Produtos();
             produtos.setId(UUID.randomUUID());
@@ -82,12 +102,13 @@ public class ProdutosController {
             produtos.setLongitude(request.getLongitude());
 
             Produtos produtoCriado = produtosService.criarProduto(produtos);
-            return ResponseEntity.status(HttpStatus.CREATED).body(produtoCriado.getId());
+            ProdutosResponse produtosResponse = produtosResponseByProdutos(produtoCriado);
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtosResponse);
         }
 
         //Método atualizar
         @PutMapping("id")
-        ResponseEntity<Produtos> atualizarProduto(@PathVariable UUID id, @RequestBody @Valid ProdutosRequest request){
+        ResponseEntity<ProdutosResponse> atualizarProduto(@PathVariable UUID id, @RequestBody @Valid ProdutosRequest request){
 
             Produtos produtos = produtosService.buscarProdutoPorId(id);
 
@@ -96,9 +117,15 @@ public class ProdutosController {
             produtos.setLatitude(request.getLatitude());
             produtos.setLongitude(request.getLongitude());
 
+            Cidades cidades = new Cidades();
+            cidades.setNome(request.getCidades().getNome());
+            cidades.setPais(request.getCidades().getPais());
 
-            Produtos atualizarProduto = produtosService.atualizarProduto(id,produtos);
-            return ResponseEntity.ok(atualizarProduto);        }
+            produtos.setCidades(cidades);
+
+            Produtos produtoAtualizado = produtosService.atualizarProduto(id, produtos);
+            ProdutosResponse response = produtosResponseByProdutos(produtoAtualizado);
+            return ResponseEntity.ok(response);        }
 
         // Método de buscar Produto por categoria
         @GetMapping("/porcategoria/{nome}")

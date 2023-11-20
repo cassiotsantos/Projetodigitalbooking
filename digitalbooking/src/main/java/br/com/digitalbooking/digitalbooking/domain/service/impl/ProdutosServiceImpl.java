@@ -39,7 +39,7 @@ public class ProdutosServiceImpl implements ProdutosService {
 
     @Override
     public List<Produtos> listaProdutoPorCidade(String nome) {
-        return produtosRepository.findByCidadeNome(nome);
+        return produtosRepository.findByCidadesNome(nome);
     }
 
 

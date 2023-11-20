@@ -62,7 +62,7 @@ public class CidadesController {
                 .map(cidade -> {
                     CidadesListResponse cidadesListResponse = new CidadesListResponse();
                     cidadesListResponse.setId(cidade.getId());
-                    cidadesListResponse.setCidade(cidade.getCidade());
+                    cidadesListResponse.setNome(cidade.getNome());
                     cidadesListResponse.setPais(cidade.getPais());
                     return cidadesListResponse;
                 })
@@ -77,7 +77,7 @@ public class CidadesController {
 
         Cidades cidades = new Cidades();
         cidades.setId(UUID.randomUUID());
-        cidades.setCidade(request.getCidade());
+        cidades.setNome(request.getNome());
         cidades.setPais(request.getPais());
 
         Cidades cidadesCriada = cidadesService.criarCidades(cidades);

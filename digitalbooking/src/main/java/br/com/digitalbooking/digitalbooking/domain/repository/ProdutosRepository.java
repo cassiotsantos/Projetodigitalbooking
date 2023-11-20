@@ -13,5 +13,5 @@ public interface ProdutosRepository extends JpaRepository<Produtos, UUID> {
 
 List<Produtos> findByNomeStartingWith (String termo);
 List<Produtos> findByCategoriasNome (String nome);
-List<Produtos> findByCidadeNome(String nome);
+List<Produtos> findByCidadesNome(String nome);
 }

@@ -22,10 +22,10 @@ public class CidadesServiceImpl implements CidadesService {
     public Cidades criarCidades(Cidades cidades) {
         return cidadesRepository.save(cidades);
     }
-    @Override
-    public List<Cidades> buscarCidades(String termo) {
-        return cidadesRepository.findByNomeStartingWith(termo);
-    }
+   // @Override
+   // public List<Cidades> buscarCidades(String termo) {
+   //     return cidadesRepository.findByNomeStartingWith(termo);
+   // }
 
     @Override
     public List<Cidades> buscarTodasCidades() { return cidadesRepository.findAll();}

@@ -13,7 +13,7 @@ public class CidadesRequest {
 
     private UUID id;
     @NotBlank
-    private String cidade;
+    private String nome;
     @NotBlank
     private String pais;
 }
