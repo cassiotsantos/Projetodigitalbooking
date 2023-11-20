@@ -2,11 +2,14 @@ package br.com.digitalbooking.digitalbooking.api.controller;
 
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.CategoriasRequest;
+import br.com.digitalbooking.digitalbooking.api.dto.response.ImagensResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CategoriasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CategoriasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
+import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +25,13 @@ import java.util.UUID;
 @Tag(name = "Categorias" )
 public class CategoriasController {
   private final CategoriasService categoriasService;
+  private final ObjectMapper objectMapper;
 
   @Autowired
-  public CategoriasController(CategoriasService categoriasService) {
+  public CategoriasController(CategoriasService categoriasService, ObjectMapper objectMapper) {
 
     this.categoriasService = categoriasService;
+    this.objectMapper = objectMapper;
   }
 
   //Buscar por ID
@@ -74,22 +79,17 @@ public class CategoriasController {
 
   //método Criar
   @PostMapping
-  ResponseEntity<UUID> criarCategorias(@RequestBody @Valid CategoriasRequest request) {
+  ResponseEntity<CategoriasResponse> criarCategorias(@RequestBody @Valid CategoriasRequest request) {
 
-    Categorias categorias = new Categorias();
-    categorias.setId(UUID.randomUUID());
-    categorias.setNome(request.getNome());
-    categorias.setUrlImage(request.getUrlImage());
-    categorias.setDescricao(request.getDescricao());
-    categorias.setQualificacao(request.getQualificacao());
-
-    Categorias categoriaCriada = categoriasService.criar(categorias);
-    return ResponseEntity.status(HttpStatus.CREATED).body(categoriaCriada.getId());
+    Categorias categorias = objectMapper.convertValue(request, Categorias.class);
+    Categorias categoriaCriada = categoriasService.criarCategorias(categorias);
+    CategoriasResponse categoriasResponse = objectMapper.convertValue(categorias, CategoriasResponse.class);
+    return ResponseEntity.status(HttpStatus.CREATED).body(categoriasResponse);
   }
 
   //Método atualizar
   @PutMapping("id")
-  ResponseEntity<?>atualizarCategoria(@PathVariable UUID id, @RequestBody @Valid CategoriasRequest request){
+  ResponseEntity<CategoriasResponse>atualizarCategoria(@PathVariable UUID id, @RequestBody @Valid CategoriasRequest request){
 
     Categorias categorias =categoriasService.buscarCategoriasPorId(id);
     categorias.setNome(request.getNome());
@@ -98,7 +98,8 @@ public class CategoriasController {
     categorias.setQualificacao(request.getQualificacao());
 
     Categorias atualizarCategoria = categoriasService.atualizarCategoria(id, categorias);
-    return ResponseEntity.ok(atualizarCategoria);
+    CategoriasResponse categoriasResponse = categoriasResponseByCategorias (atualizarCategoria);
+    return ResponseEntity.ok(categoriasResponse);
 
   }
 
