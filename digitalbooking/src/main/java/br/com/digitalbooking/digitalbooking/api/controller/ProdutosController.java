@@ -86,6 +86,19 @@ public class ProdutosController {
                                 produtosListResponse.setId(produto.getId());
                                 produtosListResponse.setNome(produto.getNome());
                                 produtosListResponse.setDescricao(produto.getDescricao());
+                                produtosListResponse.setCidadesId(produto.getCidades().getId());
+                                produtosListResponse.setCategoriasId(produto.getCategorias().getId());
+
+                                List<Imagens> imagensList = produto.getImagensList();
+                                List<UUID> imagensIdList = new ArrayList<>();
+                                for (Imagens imagem : imagensList) {
+                                    imagensIdList.add(imagem.getId());
+                                }
+                                produtosListResponse.setImagensId(imagensIdList);
+
+                                Set<Caracteristicas> caracteristicasSet = produto.getProdutosCaracteristicas();
+                                Set<UUID> caracteristicasIdSet = caracteristicasSet.stream().map(Caracteristicas::getId).collect(Collectors.toSet());
+                                produtosListResponse.setCaracteristicasProdutoId(caracteristicasIdSet);
                                 produtosListResponse.setLatitude(produto.getLatitude());
                                 produtosListResponse.setLongitude(produto.getLongitude());
                                 return produtosListResponse;
@@ -137,8 +150,20 @@ public class ProdutosController {
                                     ProdutosListResponse produtosListResponse = new ProdutosListResponse();
                                     produtosListResponse.setId(produto.getId());
                                     produtosListResponse.setNome(produto.getNome());
-                                    produtosListResponse.setCategorias(produto.getCategorias());
                                     produtosListResponse.setDescricao(produto.getDescricao());
+                                    produtosListResponse.setCidadesId(produto.getCidades().getId());
+                                    produtosListResponse.setCategoriasId(produto.getCategorias().getId());
+
+                                    List<Imagens> imagensList = produto.getImagensList();
+                                    List<UUID> imagensIdList = new ArrayList<>();
+                                    for (Imagens imagem : imagensList) {
+                                        imagensIdList.add(imagem.getId());
+                                    }
+                                    produtosListResponse.setImagensId(imagensIdList);
+
+                                    Set<Caracteristicas> caracteristicasSet = produto.getProdutosCaracteristicas();
+                                    Set<UUID> caracteristicasIdSet = caracteristicasSet.stream().map(Caracteristicas::getId).collect(Collectors.toSet());
+                                    produtosListResponse.setCaracteristicasProdutoId(caracteristicasIdSet);
                                     produtosListResponse.setLatitude(produto.getLatitude());
                                     produtosListResponse.setLongitude(produto.getLongitude());
                                     return produtosListResponse;
@@ -158,8 +183,20 @@ public class ProdutosController {
                                 ProdutosListResponse produtosListResponse = new ProdutosListResponse();
                                 produtosListResponse.setId(produto.getId());
                                 produtosListResponse.setNome(produto.getNome());
-                                produtosListResponse.setCategorias(produto.getCategorias());
                                 produtosListResponse.setDescricao(produto.getDescricao());
+                                produtosListResponse.setCidadesId(produto.getCidades().getId());
+                                produtosListResponse.setCategoriasId(produto.getCategorias().getId());
+
+                                List<Imagens> imagensList = produto.getImagensList();
+                                List<UUID> imagensIdList = new ArrayList<>();
+                                for (Imagens imagem : imagensList) {
+                                    imagensIdList.add(imagem.getId());
+                                }
+                                produtosListResponse.setImagensId(imagensIdList);
+
+                                Set<Caracteristicas> caracteristicasSet = produto.getProdutosCaracteristicas();
+                                Set<UUID> caracteristicasIdSet = caracteristicasSet.stream().map(Caracteristicas::getId).collect(Collectors.toSet());
+                                produtosListResponse.setCaracteristicasProdutoId(caracteristicasIdSet);
                                 produtosListResponse.setLatitude(produto.getLatitude());
                                 produtosListResponse.setLongitude(produto.getLongitude());
                                 return produtosListResponse;
