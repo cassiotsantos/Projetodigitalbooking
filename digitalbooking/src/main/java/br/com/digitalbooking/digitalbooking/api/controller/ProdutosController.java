@@ -6,7 +6,9 @@ import br.com.digitalbooking.digitalbooking.api.dto.response.CidadesResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ProdutosListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ProdutosWrapperResponse;
+import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
 import br.com.digitalbooking.digitalbooking.domain.entity.Cidades;
+import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,8 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("v1/produtos")
@@ -50,20 +55,20 @@ public class ProdutosController {
             produtosResponse.setLatitude(produtos.getLatitude());
             produtosResponse.setLongitude(produtos.getLongitude());
 
-            CidadesResponse cidades = new CidadesResponse();
-            cidades.setId(produtos.getCidades().getId());
-            cidades.setNome(produtos.getCidades().getNome());
-            cidades.setPais(produtos.getCidades().getPais());
+            produtosResponse.setCidadesId(produtos.getCidades().getId());
+            produtosResponse.setCategoriasId(produtos.getCategorias().getId());
 
-            CategoriasResponse categorias = new CategoriasResponse();
-            categorias.setId(produtos.getCategorias().getId());
-            categorias.setNome(produtos.getCategorias().getNome());
-            categorias.setUrlImage(produtos.getCategorias().getUrlImage());
-            categorias.setQualificacao(produtos.getCategorias().getQualificacao());
+            List<Imagens> imagensList = produtos.getImagensList();
+            List<UUID> imagensIdList = new ArrayList<>();
+            for (Imagens imagem : imagensList) {
+                imagensIdList.add(imagem.getId());
+            }
+            produtosResponse.setImagensId(imagensIdList);
 
-            produtosResponse.setCidades(cidades);
-            produtosResponse.setCategorias(categorias);
-            produtosResponse.setCaracteristicas(produtos.getProdutosCaracteristicas());
+            Set<Caracteristicas> caracteristicasSet = produtos.getProdutosCaracteristicas();
+            Set<UUID> caracteristicasIdSet = caracteristicasSet.stream().map(Caracteristicas::getId).collect(Collectors.toSet());
+            produtosResponse.setCaracteristicasProdutoId(caracteristicasIdSet);
+
 
             return produtosResponse;
 

@@ -22,7 +22,7 @@ public class CaracteristicasServiceImpl implements CaracteristicasService {
     }
 
     @Override
-    public Caracteristicas criar(Caracteristicas caracteristicas) {
+    public Caracteristicas criarCaracteristicas(Caracteristicas caracteristicas) {
         return this.caracteristicasRepository.save(caracteristicas);
     }
 

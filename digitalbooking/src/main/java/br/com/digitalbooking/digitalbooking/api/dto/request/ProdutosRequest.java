@@ -25,12 +25,10 @@ public class ProdutosRequest {
     @NotBlank
     @Size(min =10)
     private String descricao;
-    @NotEmpty
     private UUID categoriasId;
-    @NotBlank
     private UUID cidadesId;
     private List<UUID> imagensId;
-    private Set<UUID> caracteristicasProdutoId ;
+    private Set<UUID> caracteristicasProdutoId;
     @NotBlank
     private String latitude;
     @NotBlank

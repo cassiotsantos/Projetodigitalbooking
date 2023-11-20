@@ -6,7 +6,9 @@ import br.com.digitalbooking.digitalbooking.api.dto.response.*;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CaracteristicasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CaracteristicasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
+import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.service.CaracteristicasService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,15 @@ import java.util.UUID;
 @Tag(name = "Caracteristicas" )
 public class CaracteristicasController {
   private final CaracteristicasService caracteristicasService;
+  private final ObjectMapper objectMapper;
 
   @Autowired
-  public CaracteristicasController(CaracteristicasService caracteristicasService) {
+  public CaracteristicasController(CaracteristicasService caracteristicasService, ObjectMapper objectMapper) {
     this.caracteristicasService = caracteristicasService;
+    this.objectMapper = objectMapper;
   }
 
   //Buscar por ID
-
   @GetMapping("{id}")
   ResponseEntity<CaracteristicasResponse> buscarCaracteristicasPorId(@PathVariable UUID id) {
     Caracteristicas caracteristicas = caracteristicasService.buscarCaracteristicasPorId(id);
@@ -67,8 +70,14 @@ public class CaracteristicasController {
 
   //método Criar
   @PostMapping
-  ResponseEntity<UUID> criarCaracteristicas(@RequestBody @Valid CaracteristicasRequest request) {
+  ResponseEntity<CaracteristicasResponse> criarCaracteristicas(@RequestBody @Valid CaracteristicasRequest request) {
 
+    Caracteristicas caracteristicas = objectMapper.convertValue(request, Caracteristicas.class);
+    Caracteristicas caracteristicasCriado = caracteristicasService.criarCaracteristicas(caracteristicas);
+    CaracteristicasResponse caracteristicasResponse = objectMapper.convertValue(caracteristicas, CaracteristicasResponse.class);
+    return ResponseEntity.status(HttpStatus.CREATED).body(caracteristicasResponse);
+
+/*
     Caracteristicas caracteristicas = new Caracteristicas();
     caracteristicas.setId(UUID.randomUUID());
     caracteristicas.setNome(request.getNome());
@@ -76,7 +85,7 @@ public class CaracteristicasController {
 
     Caracteristicas caracteristicaCriada = caracteristicasService.criar(caracteristicas);
     return ResponseEntity.status(HttpStatus.CREATED).body(caracteristicaCriada.getId());
-  }
+  */}
 
   //Método atualizar
   @PutMapping("id")

@@ -10,10 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class CidadesWrapperResponse {
-    private List<CidadesResponse> cidades;
-
-    public void setCidades(List<CidadesListResponse> list){
-
-    }
+    private List<CidadesListResponse> cidades;
 
 }

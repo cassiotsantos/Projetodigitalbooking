@@ -19,10 +19,10 @@ public class ProdutosResponse {
     private UUID id;
     private String nome;
     private String descricao;
-    private List<Imagens> imagens;
-    private CidadesResponse cidades;
-    private CategoriasResponse categorias;
-    private Set<Caracteristicas> caracteristicas;
+    private UUID categoriasId;
+    private UUID cidadesId;
+    private List<UUID> imagensId;
+    private Set<UUID> caracteristicasProdutoId;
     private String latitude;
     private String longitude;
     private LocalDateTime createdAt;

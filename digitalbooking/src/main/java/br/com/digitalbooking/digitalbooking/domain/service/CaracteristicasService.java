@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CaracteristicasService {
-    Caracteristicas criar(Caracteristicas caracteristicas);
+    Caracteristicas criarCaracteristicas(Caracteristicas caracteristicas);
 
     List<Caracteristicas> buscarCaracteristicas(String termo);
     Caracteristicas buscarCaracteristicasPorId(UUID id);
