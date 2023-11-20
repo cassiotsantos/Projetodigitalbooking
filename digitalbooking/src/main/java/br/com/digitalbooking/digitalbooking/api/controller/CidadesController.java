@@ -37,7 +37,7 @@ public class CidadesController {
     }
 
     //Buscar todos por termo
-   /* @GetMapping
+  @GetMapping
     ResponseEntity<CidadesWrapperResponse> buscarCidades(@RequestParam String termo) {
         List<Cidades> cidades = cidadesService.buscarCidades(termo);
         CidadesWrapperResponse cidadesWrapperResponse = new CidadesWrapperResponse();
@@ -51,25 +51,8 @@ public class CidadesController {
                             return cidadesListResponse;
                         }).toList());
         return ResponseEntity.ok(cidadesWrapperResponse);
-    }*/
-
-    //Listar Todos
-    @GetMapping
-    public ResponseEntity<List<CidadesListResponse>> buscarTodasCidades() {
-        List<Cidades> cidades = cidadesService.buscarTodasCidades();
-
-        List<CidadesListResponse> response = cidades.stream()
-                .map(cidade -> {
-                    CidadesListResponse cidadesListResponse = new CidadesListResponse();
-                    cidadesListResponse.setId(cidade.getId());
-                    cidadesListResponse.setNome(cidade.getNome());
-                    cidadesListResponse.setPais(cidade.getPais());
-                    return cidadesListResponse;
-                })
-                .toList();
-
-        return ResponseEntity.ok(response);
     }
+
 
     //método Criar
     @PostMapping

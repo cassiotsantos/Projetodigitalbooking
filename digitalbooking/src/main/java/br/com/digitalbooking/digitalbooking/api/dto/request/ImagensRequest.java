@@ -9,7 +9,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ImagensRequest {
-
     @NotBlank
     private String titulo;
     private String url;

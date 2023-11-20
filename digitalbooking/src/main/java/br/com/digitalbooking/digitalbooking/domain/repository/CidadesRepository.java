@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface CidadesRepository extends JpaRepository <Cidades, UUID> {
-    //List<Cidades> findByNomeStartingWith (String termo);
+    List<Cidades> findByNomeStartingWith (String termo);
 }
