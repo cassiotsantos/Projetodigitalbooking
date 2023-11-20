@@ -7,6 +7,7 @@ import br.com.digitalbooking.digitalbooking.domain.service.ImagensService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 @Service
 @AllArgsConstructor
@@ -20,5 +21,9 @@ public class ImagensServiceImpl implements ImagensService {
     public Imagens buscarImagensPorId(UUID id) {
         try{ return imagensRepository.findById(id).orElseThrow();}
         catch (Exception e){ throw new NotFoundException(id);}
+    }
+    @Override
+    public List<Imagens> buscarTodasImagens() {
+        return imagensRepository.findAll();
     }
 }

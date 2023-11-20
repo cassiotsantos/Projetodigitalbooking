@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ImagensService {
     Imagens criarImagem (Imagens imagens);
     Imagens buscarImagensPorId (UUID id);
+    List <Imagens> buscarTodasImagens();
 }

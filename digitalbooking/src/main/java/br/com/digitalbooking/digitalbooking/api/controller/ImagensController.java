@@ -4,6 +4,8 @@ import br.com.digitalbooking.digitalbooking.api.dto.request.ImagensRequest;
 import br.com.digitalbooking.digitalbooking.api.dto.request.ProdutosRequest;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ImagensResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ImagensListResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ImagensWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.service.ImagensService;
@@ -15,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -48,6 +51,26 @@ public class ImagensController {
         return ResponseEntity.ok().body(imagensResponse);
     }
 
+    @GetMapping
+    ResponseEntity<ImagensWrapperResponse>buscarTodasImagens(){
+        List<Imagens> imagens = imagensService.buscarTodasImagens();
+        ImagensWrapperResponse imagensWrapperResponse = new ImagensWrapperResponse();
+
+        imagensWrapperResponse.setImagens(imagens.stream().map( imagem ->{
+            ImagensListResponse imagemResponse = new ImagensListResponse();
+
+            imagemResponse.setId(imagem.getId());
+            imagemResponse.setTitulo(imagem.getTitulo());
+            imagemResponse.setUrl(imagem.getUrl());
+
+            return imagemResponse;
+
+        }).toList());
+
+            return ResponseEntity.ok(imagensWrapperResponse);
+
+    }
+
     private ImagensResponse imagensResponseByImagens (Imagens imagens){
         ImagensResponse imagensResponse = new ImagensResponse();
         imagensResponse.setId(imagens.getId());
@@ -56,6 +79,5 @@ public class ImagensController {
 
         return imagensResponse;
     }
-
 
 }
