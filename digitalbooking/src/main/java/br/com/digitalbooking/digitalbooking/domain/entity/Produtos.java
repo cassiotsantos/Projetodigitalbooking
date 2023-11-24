@@ -24,7 +24,7 @@ public class Produtos {
     private String descricao;
     @OneToMany
     @JoinColumn(
-            name= "imagens_id",
+            name= "produtos_imagens",
             foreignKey =
             @ForeignKey(name = "fk_produto_imagens")
     )
