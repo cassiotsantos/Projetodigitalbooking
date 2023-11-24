@@ -14,25 +14,13 @@ import java.util.UUID;
 @Table(name = "funcoes")
 
 public class Usuarios {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    private String nome;
-    private String sobrenome;
-    private String email;
-    private String senha;
-
-    @OneToMany
-    @JoinColumn(
-            name= "funcoes_id",
-            foreignKey =
-            @ForeignKey(name = "fk_usuarios_funcoes")
-    )
-
-
-    public Usuarios() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
+  private String nome;
+  private String sobrenome;
+  private String email;
+  private String senha;
 
 
 }
-

@@ -1,6 +1,7 @@
 package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
+import br.com.digitalbooking.digitalbooking.domain.entity.EnumQualificacao;
 import br.com.digitalbooking.digitalbooking.domain.service.impl.CategoriasServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(CategoriasController.class)
 class CategoriasControllerTest {
 
   @Autowired
@@ -44,7 +45,7 @@ class CategoriasControllerTest {
     categorias.setNome("Teste");
     categorias.setUrlImage("Teste");
     categorias.setDescricao("Teste");
-    categorias.setQualificacao("Teste");
+    categorias.setQualificacao(EnumQualificacao.UM);
     categorias.setCreatedAt(LocalDateTime.now());
 
     given(categoriasService
@@ -65,7 +66,7 @@ class CategoriasControllerTest {
         .andExpect(jsonPath("$.descricao")
             .value(categorias.getDescricao()))
         .andExpect(jsonPath("$.qualificacao")
-            .value(categorias.getQualificacao()));
+            .value(categorias.getQualificacao().toString()));
   }
 
   @Test
@@ -73,19 +74,19 @@ class CategoriasControllerTest {
 
     List<Categorias> categorias = List.of(
         new Categorias(
-            "Teste",
-            "Teste",
-            "Teste",
-            "Teste",
             UUID.randomUUID(),
+            "Teste",
+            "Teste",
+            "Teste",
+            EnumQualificacao.UM,
             LocalDateTime.now()
         ),
         new Categorias(
-            "Teste",
-            "Teste",
-            "Teste",
-            "Teste",
             UUID.randomUUID(),
+            "Teste",
+            "Teste",
+            "Teste",
+            EnumQualificacao.UM,
             LocalDateTime.now()
         )
     );
@@ -108,7 +109,7 @@ class CategoriasControllerTest {
         .andExpect(jsonPath("$.categorias[0].descricao")
             .value(categorias.get(0).getDescricao()))
         .andExpect(jsonPath("$.categorias[0].qualificacao")
-            .value(categorias.get(0).getQualificacao()));
+            .value(categorias.get(0).getQualificacao().toString()));
 
     response
         .andExpect(jsonPath("$.categorias[1].id")
@@ -120,21 +121,20 @@ class CategoriasControllerTest {
         .andExpect(jsonPath("$.categorias[1].descricao")
             .value(categorias.get(1).getDescricao()))
         .andExpect(jsonPath("$.categorias[1].qualificacao")
-            .value(categorias.get(1).getQualificacao()));
+            .value(categorias.get(1).getQualificacao().toString()));
   }
 
   @Test
   void criarCategorias() throws Exception {
-    Categorias categorias = new Categorias(
-        "Teste",
-        "Teste",
-        "Teste",
-        "Teste",
-        UUID.randomUUID(),
-        LocalDateTime.now()
-    );
+    Categorias categorias = new Categorias();
 
-    given(categoriasService.criar(any(Categorias.class)))
+    categorias.setNome("Teste");
+    categorias.setUrlImage("Teste");
+    categorias.setDescricao("Testecommaiscaracteres");
+    categorias.setQualificacao(EnumQualificacao.UM);
+    categorias.setCreatedAt(LocalDateTime.now());
+
+    given(categoriasService.criarCategorias(any(Categorias.class)))
         .willReturn(categorias);
 
     ResultActions response = mockMvc
@@ -145,7 +145,15 @@ class CategoriasControllerTest {
     response
         .andExpect(status().isCreated())
         .andDo(print())
-        .andExpect(jsonPath("$")
-            .value(categorias.getId().toString()));
+        .andExpect(jsonPath("$.nome")
+            .value(categorias.getNome()))
+        .andExpect(jsonPath("$.urlImage")
+            .value(categorias.getUrlImage()))
+        .andExpect(jsonPath("$.descricao")
+            .value(categorias.getDescricao()))
+        .andExpect(jsonPath("$.qualificacao")
+            .value(categorias.getQualificacao().toString()))
+        .andExpect(jsonPath("$.createdAt")
+            .exists());
   }
 }

@@ -1,6 +1,7 @@
 package br.com.digitalbooking.digitalbooking.domain.service.impl;
 
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
+import br.com.digitalbooking.digitalbooking.domain.entity.EnumQualificacao;
 import br.com.digitalbooking.digitalbooking.domain.repository.CategoriasRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,11 +33,11 @@ class CategoriasServiceImplTest {
   @BeforeEach
   void setUp() {
     categoria = new Categorias(
+        UUID.randomUUID(),
         "nome",
         "urlImage",
         "descricao",
-        "qualificacao",
-        UUID.randomUUID(),
+        EnumQualificacao.UM,
         LocalDateTime.now()
     );
   }
@@ -48,7 +49,7 @@ class CategoriasServiceImplTest {
         .save(any(Categorias.class)))
         .willReturn(categoria);
 
-    Categorias saveCategoria = service.criar(this.categoria);
+    Categorias saveCategoria = service.criarCategorias(this.categoria);
 
     assertNotNull(saveCategoria);
     assertTrue(saveCategoria.getId().getClass().equals(UUID.class));
