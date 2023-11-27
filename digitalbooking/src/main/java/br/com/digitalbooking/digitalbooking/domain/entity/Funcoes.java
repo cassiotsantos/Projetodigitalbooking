@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,6 +19,14 @@ public class Funcoes {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
+
+    @OneToMany
+    @JoinColumn(
+            name= "usuarios_id",
+            foreignKey =
+            @ForeignKey(name = "fk_funcoes_usuarios")
+    )
+    private List<Usuarios> usuariosList;
 
 
     public Funcoes() {

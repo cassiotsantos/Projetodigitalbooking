@@ -34,7 +34,7 @@ public class CidadesController {
         this.objectMapper = objectMapper;
     }
 
-    //Buscar todos por termo
+   //Buscar todos por termo
   @GetMapping
     ResponseEntity<CidadesWrapperResponse> buscarCidades(@RequestParam String termo) {
         List<Cidades> cidades = cidadesService.buscarCidades(termo);
