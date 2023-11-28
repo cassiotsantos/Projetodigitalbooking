@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,46 +36,22 @@ public class UsuariosController {
     @PostMapping
     ResponseEntity<UsuariosResponse> criarUsuario(@RequestBody @Valid UsuariosRequest request) {
 
-        //var user = this.usuariosService.findByUsername(Usuarios.getNome());
 
-        //if (user != null) {
+        Usuarios usuario = objectMapper.convertValue(request, Usuarios.class);
 
-           // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario já cadastrado");
+        String criptopassword = CriptoPassword(usuario.getSenha());
 
-       // }
+        usuario.setSenha(criptopassword);
 
-        Usuarios Usuarios = objectMapper.convertValue(request, Usuarios.class);
-
-       // var passwordHashred = BCrypt.withDefaults()
-       //         .hashToString(12, Usuarios.getPassword().toCharArray());
-
-
-        Usuarios UsuarioCriado = usuariosService.criarUsuario(Usuarios);
+        Usuarios UsuarioCriado = usuariosService.criarUsuario(usuario);
         UsuariosResponse UsuariosResponse = objectMapper.convertValue(UsuarioCriado, UsuariosResponse.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuariosResponse);
     }
 
-
-  /* @PostMapping("/")
-    public ResponseEntity create(@RequestBody UserModel userModel) {
-        var user = this.userRepository.findByUsername(userModel.getUsername());
-
-        if (user != null) {
-            // Mensagem de erro
-            // Status Code
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe");
-        }
-
-        var passwordHashred = BCrypt.withDefaults()
-                .hashToString(12, userModel.getPassword().toCharArray());
-
-        userModel.setPassword(passwordHashred);
-
-        var userCreated = this.userRepository.save(userModel);
-        return ResponseEntity.status(HttpStatus.OK).body(userCreated);
-    }*/
-
-
+    private String CriptoPassword(String senha) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(senha);
+    }
 
 
     @GetMapping("{id}")

@@ -10,6 +10,6 @@ public interface UsuariosService {
     Usuarios criarUsuario (Usuarios usuarios);
     Usuarios buscarUsuarioPorId(UUID id);
 
-    //Usuarios buscarUsuarioPorNome(String nome);
+    Usuarios buscarUsuarioPorEmail(String email);
     List <Usuarios> buscarTodosUsuarios();
 }

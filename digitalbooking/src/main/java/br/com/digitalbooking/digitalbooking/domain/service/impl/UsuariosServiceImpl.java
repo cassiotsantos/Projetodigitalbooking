@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class UsuariosServiceImpl implements UsuariosService {
 
     private final UsuariosRepository usuariosRepository;
+
 
     @Override
     public Usuarios criarUsuario(Usuarios usuarios) {
@@ -31,9 +33,21 @@ public class UsuariosServiceImpl implements UsuariosService {
         }
     }
 
+    @Override
+    public Usuarios buscarUsuarioPorEmail(String email){
+
+        return usuariosRepository.findUsuarioByEmail(email).orElseThrow();
+
+    }
 
     @Override
     public List<Usuarios> buscarTodosUsuarios() {
             return usuariosRepository.findAll();
         }
+
+
 }
+
+
+
+
