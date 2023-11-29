@@ -26,10 +26,10 @@ public class Usuarios  implements UserDetails {
   private String sobrenome;
   private String email;
   private String senha;
-
   private FuncoesUser role;
-
-
+  @OneToOne
+  @JoinColumn(name = "funcoes_Id")
+  private Funcoes funcoes;
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     if (this.role == FuncoesUser.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
