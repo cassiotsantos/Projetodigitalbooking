@@ -2,11 +2,10 @@ package br.com.digitalbooking.digitalbooking.api.controller;
 
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.CaracteristicasRequest;
-import br.com.digitalbooking.digitalbooking.api.dto.response.*;
+import br.com.digitalbooking.digitalbooking.api.dto.response.CaracteristicasResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CaracteristicasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CaracteristicasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
-import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.service.CaracteristicasService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/caracteristicas")
-@Tag(name = "Caracteristicas" )
+@Tag(name = "Caracteristicas")
 public class CaracteristicasController {
   private final CaracteristicasService caracteristicasService;
   private final ObjectMapper objectMapper;
@@ -85,25 +84,24 @@ public class CaracteristicasController {
 
     Caracteristicas caracteristicaCriada = caracteristicasService.criar(caracteristicas);
     return ResponseEntity.status(HttpStatus.CREATED).body(caracteristicaCriada.getId());
-  */}
+  */
+  }
 
   //Método atualizar
   @PutMapping("id")
-  ResponseEntity<?>atualizarCaracteristicas(@PathVariable UUID id, @RequestBody @Valid CaracteristicasRequest request){
+  ResponseEntity<?> atualizarCaracteristicas(@PathVariable UUID id, @RequestBody @Valid CaracteristicasRequest request) {
 
     Caracteristicas caracteristicas = caracteristicasService.buscarCaracteristicasPorId(id);
     caracteristicas.setNome(request.getNome());
     caracteristicas.setIcone(request.getIcone());
 
-    Caracteristicas atualizarCaracteristica = caracteristicasService.atualizarCaracteristicas(id,caracteristicas);
+    Caracteristicas atualizarCaracteristica = caracteristicasService.atualizarCaracteristicas(id, caracteristicas);
     return ResponseEntity.ok(atualizarCaracteristica);
-
-
   }
 
   //Método deletar
   @DeleteMapping("{id}")
-  ResponseEntity<Void> deletarCaracteristicas(@PathVariable UUID id){
+  ResponseEntity<Void> deletarCaracteristicas(@PathVariable UUID id) {
     caracteristicasService.deletarCaracteristicas(id);
     return ResponseEntity.ok().build();
   }
