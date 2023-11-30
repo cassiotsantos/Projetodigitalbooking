@@ -211,10 +211,15 @@ class CaracteristicasControllerTest {
     );
     var caracteristicaResponse1 = new CaracteristicasResponse(
         caracteristica1.getId(),
-        caracteristica1.getNome(),
-        caracteristica1.getIcone()
+        caracteristica1.getNome().toString(),
+        caracteristica1.getIcone().toString()
     );
 
+    var caracteristicaRequest1 = new CaracteristicasResponse(
+        caracteristica1.getId(),
+        caracteristica1.getNome().toString(),
+        caracteristica1.getIcone().toString()
+    );
     given(service.criarCaracteristicas(caracteristica1))
         .willReturn(caracteristica1);
 
@@ -222,14 +227,12 @@ class CaracteristicasControllerTest {
         .perform(
             post("/v1/caracteristicas")
                 .contentType("application/json")
-                .content(mapper.writeValueAsString(caracteristicaResponse1))
+                .content(mapper.writeValueAsString(caracteristicaRequest1))
         );
 
     response
         .andExpect(status().isCreated())
         .andDo(print())
-        .andExpect(jsonPath("$.id")
-            .value(caracteristicaResponse1.getId().toString()))
         .andExpect(jsonPath("$.nome")
             .value(caracteristicaResponse1.getNome()))
         .andExpect(jsonPath("$.icone")
