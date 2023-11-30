@@ -21,7 +21,8 @@ public class JwtUtil {
          return extractExpiration(token);
      }
 
-     public Date extractClaimDate (String token) {
+    // Comentado Thalita, estava com erro - 30-11
+     /*  public Date extractClaimDate (String token) {
          Claims claims = extractAllClaims (token);
          return claims.getExpiration();
      }
@@ -33,8 +34,9 @@ public class JwtUtil {
 
     private Claims extractAllClaims (String token) throws ExpiredJwtException, SignatureException, MalformedJwtException, UnsupportedJwtException {
 
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).
-    }
+
+           return null;//Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+    }*/
 
 
 }

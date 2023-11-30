@@ -16,7 +16,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @Entity
-@Table(name = "funcoes")
+@Table(name = "usuarios")
 
 public class Usuarios  implements UserDetails {
   @Id
