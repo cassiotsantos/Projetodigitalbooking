@@ -19,16 +19,16 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUserName(String token) {
-        return null;
+        return jwtUtil.extractUserName(token);
     }
 
     @Override
     public String generateToken(UserDetails userDetails) {
-        return null;
+        return jwtUtil.generateToken(userDetails);
     }
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        return false;
+        return jwtUtil.validateToken(token, userDetails);
     }
 }
