@@ -1,4 +1,4 @@
-package br.com.digitalbooking.digitalbooking.infra.security;
+/* package br.com.digitalbooking.digitalbooking.infra.security;
 import br.com.digitalbooking.digitalbooking.domain.entity.Usuarios;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -47,3 +47,4 @@ public class TokenService {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }
+*/

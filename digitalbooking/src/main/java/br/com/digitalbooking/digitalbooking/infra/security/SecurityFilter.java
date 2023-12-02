@@ -1,3 +1,5 @@
+/*
+
 package br.com.digitalbooking.digitalbooking.infra.security;
 
 import br.com.digitalbooking.digitalbooking.domain.repository.UsuariosRepository;
@@ -40,3 +42,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         return authHeader.replace("Bearer ", "");
     }
 }
+
+
+ */

@@ -17,11 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfigurations {
-
     @Autowired
-    SecurityFilter securityFilter;
+    JwtRequestFilter jwtRequestFilter;
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
@@ -32,7 +30,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/Produtos").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
