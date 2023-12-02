@@ -23,7 +23,7 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public Usuarios criarUsuario(Usuarios usuarios) {
-        Optional<Usuarios> usuario = usuariosRepository.findUsuarioByEmail(usuarios.getEmail());
+        Optional<Usuarios> usuario =  usuariosRepository.findUsuarioByEmail(usuarios.getEmail());
 
         if (usuario.isPresent()){
                 throw new RegisteredUserException(usuarios.getEmail());

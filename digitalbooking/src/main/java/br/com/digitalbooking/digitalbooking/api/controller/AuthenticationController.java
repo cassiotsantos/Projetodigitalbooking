@@ -4,6 +4,7 @@ import br.com.digitalbooking.digitalbooking.api.dto.request.AuthenticationDTO;
 import br.com.digitalbooking.digitalbooking.api.dto.request.RegisterDTO;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.LoginResponseDTO;
 import br.com.digitalbooking.digitalbooking.domain.entity.Usuarios;
+import br.com.digitalbooking.digitalbooking.domain.repository.UserRepository;
 import br.com.digitalbooking.digitalbooking.domain.repository.UsuariosRepository;
 import br.com.digitalbooking.digitalbooking.infra.security.JwtUtil;
 import jakarta.validation.Valid;
@@ -28,6 +29,9 @@ public class AuthenticationController {
     private UsuariosRepository repository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
@@ -42,7 +46,7 @@ public class AuthenticationController {
     }
     @PostMapping("/register")
     public ResponseEntity register (@RequestBody @Valid RegisterDTO data) {
-        if (this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
+        if (this. userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
 
         System.out.println("Aqui cria novo usuario");
 

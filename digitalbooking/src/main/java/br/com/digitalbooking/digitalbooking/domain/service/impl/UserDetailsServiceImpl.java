@@ -14,7 +14,6 @@ public class UserDetailsServiceImpl implements UserService {
         public UserDetailsService userDetailsService(){
              return (email)->
                      userRepository
-                             .findByEmail(email)
-                             .orElseThrow(() -> new UsernameNotFoundException("Verificar e-mail: Usuário não encontrado"));
+                             .findByEmail(email);
         }
 }
