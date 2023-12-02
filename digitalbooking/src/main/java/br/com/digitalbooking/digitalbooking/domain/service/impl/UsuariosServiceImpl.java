@@ -17,7 +17,6 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     private final UsuariosRepository usuariosRepository;
 
-
     @Override
     public Usuarios criarUsuario(Usuarios usuarios) {
         return usuariosRepository.save(usuarios);

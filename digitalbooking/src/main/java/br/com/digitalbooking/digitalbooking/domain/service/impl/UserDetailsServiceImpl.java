@@ -10,12 +10,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserService {
         private final UserRepository userRepository;
-
         @Override
         public UserDetailsService userDetailsService(){
              return (email)->
                      userRepository
                              .findByEmail(email)
-                             .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+                             .orElseThrow(() -> new UsernameNotFoundException("Verificar e-mail: Usuário não encontrado"));
         }
 }
