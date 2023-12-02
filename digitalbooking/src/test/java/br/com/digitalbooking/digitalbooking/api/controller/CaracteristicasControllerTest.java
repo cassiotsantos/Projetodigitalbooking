@@ -6,7 +6,6 @@ import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.Car
 import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
 import br.com.digitalbooking.digitalbooking.domain.service.impl.CaracteristicasServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,65 +34,6 @@ class CaracteristicasControllerTest {
   @MockBean
   CaracteristicasServiceImpl service;
 
-
-  @BeforeEach
-  void setUp() {
-    var caracteristica1 = new Caracteristicas(
-        UUID.randomUUID(),
-        "nome1",
-        "icone1"
-    );
-    var caracteristica2 = new Caracteristicas(
-        UUID.randomUUID(),
-        "nome2",
-        "icone2"
-    );
-    var caracteristica3 = new Caracteristicas(
-        UUID.randomUUID(),
-        "nome3",
-        "icone3"
-    );
-    var listCaracteristicas = List.of(
-        caracteristica1,
-        caracteristica2,
-        caracteristica3
-    );
-    var caracteristicaResponse1 = new CaracteristicasResponse(
-        caracteristica1.getId(),
-        caracteristica1.getNome(),
-        caracteristica1.getIcone()
-    );
-    var caracteristicaResponse2 = new CaracteristicasResponse(
-        caracteristica2.getId(),
-        caracteristica2.getNome(),
-        caracteristica2.getIcone()
-    );
-    var caracteristicaResponse3 = new CaracteristicasResponse(
-        caracteristica3.getId(),
-        caracteristica3.getNome(),
-        caracteristica3.getIcone()
-    );
-    var listCaracteristicasResponse = new CaracteristicasWrapperResponse(
-        List.of(new CaracteristicasListResponse(
-                caracteristica1.getId(),
-                caracteristica1.getNome(),
-                caracteristica1.getIcone()
-            ),
-            new CaracteristicasListResponse(
-                caracteristica2.getId(),
-                caracteristica2.getNome(),
-                caracteristica2.getIcone()
-            ),
-            new CaracteristicasListResponse(
-                caracteristica3.getId(),
-                caracteristica3.getNome(),
-                caracteristica3.getIcone()
-            )
-        )
-    );
-  }
-
-  @Test
   void buscarCaracteristicasPorId() throws Exception {
 
     var caracteristica1 = new Caracteristicas(
@@ -243,6 +183,8 @@ class CaracteristicasControllerTest {
 
   @Test
   void atualizarCaracteristicas() {
+
+
   }
 
   @Test
