@@ -8,6 +8,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class AuthorizationService implements UserDetailsService {
 
+
+
+
+
+
+
+
+
+    /*
     @Autowired
     UsuariosRepository repository;
 
@@ -15,4 +24,6 @@ public class AuthorizationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return repository.findByEmail(email);
     }
+
+     */
 }

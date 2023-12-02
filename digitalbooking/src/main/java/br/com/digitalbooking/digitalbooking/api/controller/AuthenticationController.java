@@ -5,7 +5,7 @@ import br.com.digitalbooking.digitalbooking.api.dto.request.RegisterDTO;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.LoginResponseDTO;
 import br.com.digitalbooking.digitalbooking.domain.entity.Usuarios;
 import br.com.digitalbooking.digitalbooking.domain.repository.UsuariosRepository;
-import br.com.digitalbooking.digitalbooking.infra.security.TokenService;
+import br.com.digitalbooking.digitalbooking.infra.security.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,19 +28,18 @@ public class AuthenticationController {
     private UsuariosRepository repository;
 
     @Autowired
-    private TokenService tokenService;
+    private JwtUtil jwtUtil;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         var emailsenha = new UsernamePasswordAuthenticationToken(data.email(),data.senha());
         var auth = this.authenticationManager.authenticate(emailsenha);
 
-        var token = tokenService.generateToken((Usuarios) auth.getPrincipal());
+        var token = jwtUtil.generateToken((Usuarios) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
 
     }
-
     @PostMapping("/register")
     public ResponseEntity register (@RequestBody @Valid RegisterDTO data) {
         if (this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
