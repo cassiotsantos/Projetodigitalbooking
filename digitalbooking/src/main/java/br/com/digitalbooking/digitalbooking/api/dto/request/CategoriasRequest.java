@@ -19,7 +19,7 @@ public class CategoriasRequest {
   @NotEmpty
   private String urlImage;
   @NotBlank
-  @Size(min = 10)
+  @Size(min = 10, max = 500)
   private String descricao;
   private EnumQualificacao qualificacao;
   private LocalDateTime createdAt;
