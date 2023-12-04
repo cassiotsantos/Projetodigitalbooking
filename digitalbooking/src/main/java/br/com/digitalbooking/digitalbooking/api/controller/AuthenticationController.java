@@ -42,15 +42,15 @@ public class AuthenticationController {
 
     }
     @PostMapping("/register")
-    public ResponseEntity<?> register (@RequestBody @Valid AuthenticationSingInDTO request) throws Exception{
+    public ResponseEntity<AuthenticationResponseDTO> register (@RequestBody @Valid AuthenticationSingUpDTO request) throws Exception{
 
         SingUp signUp = SingUp.builder()
                 .email(request.getEmail())
-                .senha((request.getSenha())
+                .senha(request.getSenha())
                 .role(request.getRole())
                 .build();
         String jwt = authenticationUserService.signUp(signUp);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthenticationSingUpDTO(jwt));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthenticationResponseDTO(jwt));
 
     }
 
