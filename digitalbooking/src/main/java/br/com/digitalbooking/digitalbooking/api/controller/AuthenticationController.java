@@ -22,29 +22,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("v1/authentication")
 public class AuthenticationController {
-    @Autowired
-    private AuthenticationUserService authenticationUserService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UsuariosRepository repository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private JwtUtil jwtUtil;
 
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationSingInDTO request){
+    private AuthenticationUserService authenticationUserService;
+
+    @Autowired
+    public AuthenticationController(AuthenticationUserService authenticationUserService) {
+        this.authenticationUserService = authenticationUserService;
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationSingInDTO request){
 
         SingIn signIn = new SingIn(request.getEmail(), request.getSenha());
         String jwt = authenticationUserService.signIn(signIn);
         return ResponseEntity.ok(new AuthenticationResponseDTO(jwt));
 
     }
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponseDTO> register (@RequestBody @Valid AuthenticationSingUpDTO request) throws Exception{
+    @PostMapping(value = "/register")
+    public ResponseEntity<?> register(@RequestBody @Valid AuthenticationSingUpDTO request) throws Exception{
 
         SingUp signUp = SingUp.builder()
+                .nome(request.getNome())
                 .email(request.getEmail())
                 .senha(request.getSenha())
                 .role(request.getRole())

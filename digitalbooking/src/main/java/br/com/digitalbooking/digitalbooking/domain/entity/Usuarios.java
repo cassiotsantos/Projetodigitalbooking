@@ -1,10 +1,7 @@
 package br.com.digitalbooking.digitalbooking.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "usuarios")

@@ -1,12 +1,11 @@
 package br.com.digitalbooking.digitalbooking.infra.security;
 
-import com.auth0.jwt.interfaces.Claim;
-import io.jsonwebtoken.*;
-import org.hibernate.annotations.Comment;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +15,12 @@ public class JwtUtil {
 
      private String SECRET_KEY = "secret";
 
-     public String extractUserName (String token) {
-         return extractUserName(token);
+     public String extractUserName(String token) {
+         return extractClaimUserName(token);
      }
 
      public Date extractExpiration (String token) {
-         return extractExpiration(token);
+         return extractClaimDate(token);
      }
 
       public Date extractClaimDate (String token) {
@@ -34,7 +33,7 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-    private Claims extractAllClaims (String token) throws ExpiredJwtException, SignatureException, MalformedJwtException, UnsupportedJwtException {
+    private Claims extractAllClaims (String token) {
            return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
@@ -45,7 +44,7 @@ public class JwtUtil {
 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 + 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
