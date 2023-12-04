@@ -1,4 +1,4 @@
-package br.com.digitalbooking.digitalbooking.domain.entity;
+/* package br.com.digitalbooking.digitalbooking.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class Funcoes {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
-
+    private TypeFuncoesUser typeFuncoesUser;
     @OneToMany
     @JoinColumn(
             name= "usuarios_id",
@@ -26,8 +26,7 @@ public class Funcoes {
             @ForeignKey(name = "fk_funcoes_usuarios")
     )
     private List<Usuarios> usuariosList;
-
-
     public Funcoes() {
     }
 }
+*/

@@ -1,6 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.entity;
 
-public enum FuncoesUser {
+public enum TypeFuncoesUser {
 
     ADMIN ("admin"),
 
@@ -8,7 +8,7 @@ public enum FuncoesUser {
 
     private String role;
 
-    FuncoesUser(String role) {
+    TypeFuncoesUser(String role) {
         this.role = role;
     }
 
