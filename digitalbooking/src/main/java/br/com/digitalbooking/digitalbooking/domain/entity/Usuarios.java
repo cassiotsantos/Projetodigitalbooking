@@ -2,6 +2,7 @@ package br.com.digitalbooking.digitalbooking.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @Entity
 @Table(name = "usuarios")
@@ -35,7 +37,7 @@ public class Usuarios  implements UserDetails {
 
   @Override
   public String getPassword() {
-    return null;
+    return senha;
   }
 
   @Override
