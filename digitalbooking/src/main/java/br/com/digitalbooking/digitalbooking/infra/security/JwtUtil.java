@@ -1,5 +1,6 @@
 package br.com.digitalbooking.digitalbooking.infra.security;
 
+import br.com.digitalbooking.digitalbooking.domain.entity.Usuarios;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -38,7 +39,13 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails){
+        Usuarios usuario = (Usuarios) userDetails;
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id", usuario.getId());
+        claims.put("nome", usuario.getNome());
+        claims.put("sobrenome", usuario.getSobrenome());
+        claims.put("role", usuario.getRole());
+
         return createToken(claims, userDetails.getUsername());
     }
 
