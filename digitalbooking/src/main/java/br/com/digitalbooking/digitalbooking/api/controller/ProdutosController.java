@@ -1,13 +1,10 @@
 package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.ProdutosRequest;
-import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
-import br.com.digitalbooking.digitalbooking.api.dto.response.CidadesResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ProdutosListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ProdutosWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
-import br.com.digitalbooking.digitalbooking.domain.entity.Cidades;
 import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
