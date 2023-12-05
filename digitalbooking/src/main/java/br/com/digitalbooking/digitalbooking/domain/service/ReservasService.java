@@ -8,8 +8,6 @@ import java.util.UUID;
 
 @Service
 public interface ReservasService {
-
-
     Reservas criarReserva (Reservas reservas);
     List<Reservas> findByProdutosId (UUID produtoId);
     List<Reservas> findByUsuario(UUID usuarioId);

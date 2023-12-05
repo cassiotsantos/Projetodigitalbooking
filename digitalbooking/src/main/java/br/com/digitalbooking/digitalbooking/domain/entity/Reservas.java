@@ -21,7 +21,7 @@ public class Reservas {
     private LocalTime horaInicio;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
-
+    private StatusResersas status;
 
     @ManyToOne
     @JoinColumn( name ="usuario_id", nullable = false)
