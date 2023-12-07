@@ -14,6 +14,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @Table(name = "reservas")
+
 public class Reservas {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,11 +25,17 @@ public class Reservas {
     private StatusResersas status;
 
     @ManyToOne
-    @JoinColumn( name ="usuario_id", nullable = false)
+    @JoinColumn( name ="usuario_id", nullable = false,
+            foreignKey =
+            @ForeignKey(name = "fk_reservas_usuario")
+    )
     private Usuarios usuarios;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false)
+    @JoinColumn(name = "produto_id", nullable = false,
+            foreignKey =
+            @ForeignKey(name = "fk_reservas_produto")
+    )
     private Produtos produtos;
 
     public Reservas(){

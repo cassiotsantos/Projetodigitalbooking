@@ -1,6 +1,7 @@
 package br.com.digitalbooking.digitalbooking.domain.service.impl;
 
 import br.com.digitalbooking.digitalbooking.domain.entity.Reservas;
+import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.repository.ReservasRepository;
 import br.com.digitalbooking.digitalbooking.domain.service.ReservasService;
 import lombok.AllArgsConstructor;
@@ -12,13 +13,14 @@ import java.util.UUID;
 
 
 @Service
-@AllArgsConstructor
 
 public class ReservasServiceImpl implements ReservasService {
 
     private final ReservasRepository reservasRepository;
 
-    @Autowired
+
+
+      @Autowired
     public ReservasServiceImpl(ReservasRepository reservasRepository) {
         this.reservasRepository = reservasRepository;
     }
@@ -32,11 +34,11 @@ public class ReservasServiceImpl implements ReservasService {
 
     @Override
     public List<Reservas> findByProdutosId(UUID produtoId) {
-        return null;
-    }
+              return reservasRepository.findByProdutosId(produtoId);}
+
 
     @Override
-    public List<Reservas> findByUsuario(UUID usuarioId) {
-        return null;
-    }
+    public List<Reservas> findByUsuarioId(UUID usuarioId) {
+              return reservasRepository.findByUsuarioId(usuarioId);}
+
 }

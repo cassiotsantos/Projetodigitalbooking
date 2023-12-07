@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface ReservasRepository extends JpaRepository <Reservas, UUID> {
 
     List<Reservas> findByProdutosId(UUID produtoId);
-    List<Reservas> findByUsuario(UUID usuarioid);
+    List<Reservas> findByUsuarioId(UUID usuarioid);
 
 }
