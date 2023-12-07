@@ -35,6 +35,7 @@ public class AuthenticationUserServiceImpl implements AuthenticationUserService 
     @Override
     public String signUp(SingUp request) {
         var user = Usuarios.builder().nome(request.getNome())
+                .sobrenome(request.getSobrenome())
                 .email(request.getEmail()).senha(passwordEncoder.encode(request.getSenha()))
                 .role(request.getRole()).build();
         userRepository.save(user);
