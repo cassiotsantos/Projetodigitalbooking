@@ -10,6 +10,7 @@ import lombok.Setter;
 @Builder
 public class SingUp {
     private String nome;
+    private String sobrenome;
     private String email;
     private String senha;
     private TypeFuncoesUser role;

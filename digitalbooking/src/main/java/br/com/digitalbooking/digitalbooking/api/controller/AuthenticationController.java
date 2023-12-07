@@ -45,6 +45,7 @@ public class AuthenticationController {
 
         SingUp signUp = SingUp.builder()
                 .nome(request.getNome())
+                .sobrenome(request.getSobrenome())
                 .email(request.getEmail())
                 .senha(request.getSenha())
                 .role(request.getRole())

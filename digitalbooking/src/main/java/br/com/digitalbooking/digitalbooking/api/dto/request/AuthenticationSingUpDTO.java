@@ -13,6 +13,8 @@ public class AuthenticationSingUpDTO {
     @NotBlank
     private String nome;
     @NotBlank
+    private String sobrenome;
+    @NotBlank
     private String email;
     @NotBlank
     private String senha;
