@@ -9,6 +9,7 @@ import br.com.digitalbooking.digitalbooking.domain.repository.UserRepository;
 import br.com.digitalbooking.digitalbooking.domain.repository.UsuariosRepository;
 import br.com.digitalbooking.digitalbooking.domain.service.AuthenticationUserService;
 import br.com.digitalbooking.digitalbooking.infra.security.JwtUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/authentication")
+@Tag(name = "Authentication")
 public class AuthenticationController {
 
     private AuthenticationUserService authenticationUserService;
