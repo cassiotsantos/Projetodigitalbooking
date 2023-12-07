@@ -2,14 +2,18 @@ package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.entity.EnumQualificacao;
+import br.com.digitalbooking.digitalbooking.domain.service.JwtService;
+import br.com.digitalbooking.digitalbooking.domain.service.UserService;
 import br.com.digitalbooking.digitalbooking.domain.service.impl.CategoriasServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +39,18 @@ class CategoriasControllerTest {
   @MockBean
   CategoriasServiceImpl categoriasService;
 
+  @MockBean
+  JwtService jwtService;
+
+  @MockBean
+  UserService userService;
+
+  @Autowired
+  private WebApplicationContext context;
+
+
   @Test
+  @WithMockUser
   void buscarCategoriasPorId() throws Exception {
 
     UUID uuid = UUID.randomUUID();
@@ -70,6 +85,7 @@ class CategoriasControllerTest {
   }
 
   @Test
+  @WithMockUser
   void buscarCategorias() throws Exception {
 
     List<Categorias> categorias = List.of(
@@ -125,7 +141,9 @@ class CategoriasControllerTest {
   }
 
   @Test
+  @WithMockUser
   void criarCategorias() throws Exception {
+
     Categorias categorias = new Categorias();
 
     categorias.setNome("Teste");
