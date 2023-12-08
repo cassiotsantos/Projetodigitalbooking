@@ -22,7 +22,7 @@ public class Reservas {
     private LocalTime horaInicio;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
-    private StatusResersas status;
+    private StatusReservas status;
 
     @NotBlank
     @ManyToOne

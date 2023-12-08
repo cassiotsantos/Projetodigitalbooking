@@ -1,6 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.entity;
 
-public enum StatusResersas {
+public enum StatusReservas {
     CANCEL("Cancelada"),
     EMSAIDA("Checkout"),
     EMENTRADA("Checkin"),
@@ -9,7 +9,7 @@ public enum StatusResersas {
 
     private String status;
 
-    StatusResersas(String status){this.status = status;}
+    StatusReservas(String status){this.status = status;}
 
     public String getStatus(){return status;}
 

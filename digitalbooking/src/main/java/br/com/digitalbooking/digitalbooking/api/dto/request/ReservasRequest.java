@@ -1,6 +1,6 @@
 package br.com.digitalbooking.digitalbooking.api.dto.request;
 
-import br.com.digitalbooking.digitalbooking.domain.entity.StatusResersas;
+import br.com.digitalbooking.digitalbooking.domain.entity.StatusReservas;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +19,5 @@ public class ReservasRequest {
     private LocalTime horaInicio;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
-    private StatusResersas status;
+    private StatusReservas status;
 }
