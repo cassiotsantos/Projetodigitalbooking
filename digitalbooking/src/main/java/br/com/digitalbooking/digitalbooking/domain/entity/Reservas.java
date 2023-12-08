@@ -1,6 +1,7 @@
 package br.com.digitalbooking.digitalbooking.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,6 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @Table(name = "reservas")
-
 public class Reservas {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,13 +24,14 @@ public class Reservas {
     private LocalDate dataFinal;
     private StatusResersas status;
 
+    @NotBlank
     @ManyToOne
     @JoinColumn( name ="usuario_id", nullable = false,
             foreignKey =
             @ForeignKey(name = "fk_reservas_usuario")
     )
     private Usuarios usuarios;
-
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false,
             foreignKey =

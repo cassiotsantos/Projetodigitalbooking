@@ -22,14 +22,14 @@ public class Produtos {
     private UUID id;
     private String nome;
     private String descricao;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(
             name= "produtos_imagens",
             foreignKey =
             @ForeignKey(name = "fk_produto_imagens")
     )
     private List<Imagens> imagensList;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable( name =" produtos_caracteristicas",
                 joinColumns =
                 @JoinColumn(name = "id_produtos"),
