@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface ReservasRepository extends JpaRepository <Reservas, UUID> {
+public interface ReservasRepository extends JpaRepository<Reservas, UUID> {
 
-    List<Reservas> findByProdutosId(UUID produtoId);
-    List<Reservas> findByUsuarioId(UUID usuarioid);
+  List<Reservas> findByProdutosId(UUID produtoId);
+
+  List<Reservas> findByUsuariosId(UUID usuarioid);
 
 }
