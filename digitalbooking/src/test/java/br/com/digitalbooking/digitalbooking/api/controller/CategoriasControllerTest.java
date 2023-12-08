@@ -1,5 +1,6 @@
 package br.com.digitalbooking.digitalbooking.api.controller;
 
+import br.com.digitalbooking.digitalbooking.api.dto.request.CategoriasRequest;
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
 import br.com.digitalbooking.digitalbooking.domain.entity.EnumQualificacao;
 import br.com.digitalbooking.digitalbooking.domain.service.JwtService;
@@ -8,12 +9,12 @@ import br.com.digitalbooking.digitalbooking.domain.service.impl.CategoriasServic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -44,9 +46,6 @@ class CategoriasControllerTest {
 
   @MockBean
   UserService userService;
-
-  @Autowired
-  private WebApplicationContext context;
 
 
   @Test
@@ -142,23 +141,33 @@ class CategoriasControllerTest {
 
   @Test
   @WithMockUser
+  @AutoConfigureMockMvc(addFilters = false)
   void criarCategorias() throws Exception {
+    CategoriasRequest request = new CategoriasRequest(
+        "Teste",
+        "Teste",
+        "Testedecumentu",
+        EnumQualificacao.UM,
+        LocalDateTime.now()
+    );
+    Categorias categorias = new Categorias(
+        UUID.randomUUID(),
+        "Teste",
+        "Teste",
+        "Testedecumentu",
+        EnumQualificacao.UM,
+        request.getCreatedAt()
+    );
 
-    Categorias categorias = new Categorias();
-
-    categorias.setNome("Teste");
-    categorias.setUrlImage("Teste");
-    categorias.setDescricao("Testecommaiscaracteres");
-    categorias.setQualificacao(EnumQualificacao.UM);
-    categorias.setCreatedAt(LocalDateTime.now());
 
     given(categoriasService.criarCategorias(any(Categorias.class)))
         .willReturn(categorias);
 
     ResultActions response = mockMvc
         .perform(post("/v1/categorias")
+            .with(csrf())
             .contentType("application/json")
-            .content(mapper.writeValueAsString(categorias)));
+            .content(mapper.writeValueAsString(request)));
 
     response
         .andExpect(status().isCreated())
