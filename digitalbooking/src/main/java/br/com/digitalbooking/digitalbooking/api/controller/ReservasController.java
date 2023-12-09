@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("v1/reservas")
 @Tag(name = "Reservas")
-
 public class ReservasController {
 
     private final ObjectMapper objectMapper;
@@ -33,14 +32,26 @@ public class ReservasController {
         this.reservasService = reservasService;
     }
 
+    @PostMapping
+    public ResponseEntity<ReservasResponse> criarReserva(@RequestBody ReservasResponse reservasResponse){
+        return new ResponseEntity<>(reservasService.criarReserva(reservasResponse), HttpStatus.CREATED);
+    }
+
+
+
+
+
+
     //Inserir
+
+    /*
     @PostMapping
     ResponseEntity<ReservasResponse> criarReservas(@RequestBody @Valid ReservasRequest request){
         Reservas reservas = objectMapper.convertValue(request,Reservas.class);
         Reservas reservaCriada = reservasService.criarReserva(reservas);
         ReservasResponse reservasResponse = objectMapper.convertValue(reservaCriada, ReservasResponse.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(reservasResponse);
-    }
+    }*/
 
 
 

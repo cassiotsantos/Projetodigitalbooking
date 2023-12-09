@@ -30,7 +30,7 @@ public class Reservas {
             foreignKey =
             @ForeignKey(name = "fk_reservas_usuario")
     )
-    private Usuarios usuarios;
+    private Usuarios usuarioId;
     @NotBlank
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false,

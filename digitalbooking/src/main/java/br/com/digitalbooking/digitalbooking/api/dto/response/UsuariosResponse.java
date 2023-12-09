@@ -13,4 +13,20 @@ public class UsuariosResponse {
     private String sobrenome;
     private String email;
     private String senha;
+
+    public UsuariosResponse() {
+
+    }
+
+    public UsuariosResponse(UUID id) {
+        this.id = id;
+    }
+
+    public UsuariosResponse(String nome, String sobrenome, String email, String senha) {
+
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
+        this.senha = senha;
+    }
 }

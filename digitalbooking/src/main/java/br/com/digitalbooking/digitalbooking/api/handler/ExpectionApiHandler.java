@@ -1,11 +1,14 @@
 package br.com.digitalbooking.digitalbooking.api.handler;
 
+import br.com.digitalbooking.digitalbooking.domain.exception.DatasIncorrectException;
 import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.exception.RegisteredUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.zip.DataFormatException;
 
 @ControllerAdvice
 public class ExpectionApiHandler {
@@ -22,5 +25,11 @@ public class ExpectionApiHandler {
         Problem problem = new Problem(HttpStatus.BAD_REQUEST.value(), message, e.getMessage());
         return ResponseEntity.ok().body(problem);
 
+    }
+    @ExceptionHandler(DatasIncorrectException.class)
+    public ResponseEntity<Problem> dataIncorrectExpection(DatasIncorrectException e) {
+        String message = "Data invalida";
+        Problem problem = new Problem(HttpStatus.BAD_REQUEST.value(),message, e.getMessage());
+        return ResponseEntity.ok().body(problem);
     }
 }
