@@ -2,12 +2,10 @@ package br.com.digitalbooking.digitalbooking.api.controller;
 
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.CategoriasRequest;
-import br.com.digitalbooking.digitalbooking.api.dto.response.ImagensResponse;
-import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CategoriasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CategoriasResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CategoriasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CategoriasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Categorias;
-import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
 import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/categorias")
-@Tag(name = "Categorias" )
+@Tag(name = "Categorias")
 public class CategoriasController {
   private final CategoriasService categoriasService;
   private final ObjectMapper objectMapper;
@@ -88,24 +86,24 @@ public class CategoriasController {
   }
 
   //Método atualizar
-  @PutMapping("id")
-  ResponseEntity<CategoriasResponse>atualizarCategoria(@PathVariable UUID id, @RequestBody @Valid CategoriasRequest request){
+  @PutMapping("{id}")
+  ResponseEntity<CategoriasResponse> atualizarCategoria(@PathVariable UUID id, @RequestBody @Valid CategoriasRequest request) {
 
-    Categorias categorias =categoriasService.buscarCategoriasPorId(id);
+    Categorias categorias = categoriasService.buscarCategoriasPorId(id);
     categorias.setNome(request.getNome());
     categorias.setDescricao(request.getDescricao());
     categorias.setUrlImage(request.getUrlImage());
     categorias.setQualificacao(request.getQualificacao());
 
     Categorias atualizarCategoria = categoriasService.atualizarCategoria(id, categorias);
-    CategoriasResponse categoriasResponse = categoriasResponseByCategorias (atualizarCategoria);
+    CategoriasResponse categoriasResponse = categoriasResponseByCategorias(atualizarCategoria);
     return ResponseEntity.ok(categoriasResponse);
 
   }
 
   //Método deletar
   @DeleteMapping("{id}")
-  ResponseEntity<Void> deletarCategoria(@PathVariable UUID id){
+  ResponseEntity<Void> deletarCategoria(@PathVariable UUID id) {
     categoriasService.deletarCategoria(id);
     return ResponseEntity.ok().build();
   }
