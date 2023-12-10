@@ -24,14 +24,12 @@ public class Reservas {
     private LocalDate dataFinal;
     private StatusReservas status;
 
-    @NotBlank
     @ManyToOne
     @JoinColumn( name ="usuario_id", nullable = false,
             foreignKey =
             @ForeignKey(name = "fk_reservas_usuario")
     )
     private Usuarios usuarioId;
-    @NotBlank
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false,
             foreignKey =

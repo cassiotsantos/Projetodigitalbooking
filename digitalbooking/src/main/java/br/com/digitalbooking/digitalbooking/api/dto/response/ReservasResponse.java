@@ -1,7 +1,5 @@
 package br.com.digitalbooking.digitalbooking.api.dto.response;
 
-
-import br.com.digitalbooking.digitalbooking.api.dto.request.ReservasRequest;
 import br.com.digitalbooking.digitalbooking.domain.entity.StatusReservas;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +19,8 @@ public class ReservasResponse {
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private StatusReservas status;
-    private UUID produtos;
-    private UUID usuarioId;
+    private UUID produtosId;
+    private UUID usuariosId;
     
     public ReservasResponse () {
         

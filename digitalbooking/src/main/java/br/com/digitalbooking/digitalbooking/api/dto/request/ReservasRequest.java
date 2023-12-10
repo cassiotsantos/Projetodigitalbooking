@@ -1,8 +1,6 @@
 package br.com.digitalbooking.digitalbooking.api.dto.request;
 
-import br.com.digitalbooking.digitalbooking.api.dto.response.ReservasResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.StatusReservas;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,12 +13,11 @@ import java.util.UUID;
 
 public class ReservasRequest {
 
-    @NotBlank
     private LocalTime horaInicio;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private StatusReservas status;
-    private UUID produtos;
+    private UUID produtosId;
     private UUID usuariosId;
 
 }

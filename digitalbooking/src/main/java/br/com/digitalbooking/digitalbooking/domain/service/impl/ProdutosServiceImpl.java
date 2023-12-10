@@ -4,6 +4,7 @@ import br.com.digitalbooking.digitalbooking.domain.entity.*;
 import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.repository.*;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class ProdutosServiceImpl implements ProdutosService {
     private final ImagensRepository imagensRepository;
 
     @Override
+    @Transactional
     public Produtos criarProduto(Produtos produtos, UUID categoriaId, UUID cidadesId, List<UUID> imagensId, Set<UUID> caracteristicasProdutoId) {
         Categorias categorias = categoriasRepository.findById(categoriaId).orElseThrow(() -> new NotFoundException(categoriaId));
         produtos.setCategorias(categorias);
