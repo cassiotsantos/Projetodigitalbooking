@@ -33,13 +33,9 @@ public class ReservasController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservasResponse> criarReserva(@RequestBody ReservasResponse reservasResponse){
-        return new ResponseEntity<>(reservasService.criarReserva(reservasResponse), HttpStatus.CREATED);
+    public ResponseEntity<ReservasResponse> criarReserva(@RequestBody ReservasRequest request){
+        return new ResponseEntity<>(reservasService.criarReserva(request), HttpStatus.CREATED);
     }
-
-
-
-
 
 
     //Inserir

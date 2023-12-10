@@ -1,6 +1,7 @@
 package br.com.digitalbooking.digitalbooking.api.dto.response;
 
 
+import br.com.digitalbooking.digitalbooking.api.dto.request.ReservasRequest;
 import br.com.digitalbooking.digitalbooking.domain.entity.StatusReservas;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

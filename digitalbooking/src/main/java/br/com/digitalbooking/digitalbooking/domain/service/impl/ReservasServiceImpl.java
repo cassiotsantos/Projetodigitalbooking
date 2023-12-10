@@ -50,8 +50,8 @@ public class ReservasServiceImpl implements ReservasService {
         UsuariosResponse usuario = reservasResponse.getUsuariosResponse();
         LocalDate dataInicio = reservasResponse.getDataInicio();
         LocalDate dataFinal = reservasResponse.getDataFinal();
-        StatusReservas status = reservasResponse.getStatus();
-        CidadesResponse cidade = reservasResponse.getCidade();
+       // StatusReservas status = reservasResponse.getStatus();
+        //CidadesResponse cidade = reservasResponse.getCidade();
 
         // Verificar se existe produto
 
@@ -76,7 +76,6 @@ public class ReservasServiceImpl implements ReservasService {
         }
         if (dataFinal == null){
             throw new DatasIncorrectException("Data final invalida");
-
         }
 
         // Verificar se a data não é anterior a data de hoje
@@ -94,7 +93,6 @@ public class ReservasServiceImpl implements ReservasService {
     @Override
     public List<Reservas> findByProdutosId(UUID produtoId) {
               return reservasRepository.findByProdutosId(produtoId);}
-
 
     @Override
     public List<Reservas> findByUsuarioId(Usuarios usuarioId) {

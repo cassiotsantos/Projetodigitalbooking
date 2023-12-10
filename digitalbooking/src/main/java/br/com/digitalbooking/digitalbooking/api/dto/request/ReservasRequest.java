@@ -1,5 +1,6 @@
 package br.com.digitalbooking.digitalbooking.api.dto.request;
 
+import br.com.digitalbooking.digitalbooking.api.dto.response.ReservasResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.StatusReservas;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 
-public class ReservasRequest {
+public class ReservasRequest extends ReservasResponse {
 
     @NotBlank
     private UUID id;
