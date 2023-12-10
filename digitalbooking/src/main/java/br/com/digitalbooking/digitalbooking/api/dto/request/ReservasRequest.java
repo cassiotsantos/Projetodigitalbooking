@@ -13,12 +13,14 @@ import java.util.UUID;
 @Getter
 @Setter
 
-public class ReservasRequest extends ReservasResponse {
+public class ReservasRequest {
 
     @NotBlank
-    private UUID id;
     private LocalTime horaInicio;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private StatusReservas status;
+    private UUID produtos;
+    private UUID usuariosId;
+
 }

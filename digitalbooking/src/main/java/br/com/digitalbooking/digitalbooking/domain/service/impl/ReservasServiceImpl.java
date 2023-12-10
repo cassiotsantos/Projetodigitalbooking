@@ -1,5 +1,6 @@
 package br.com.digitalbooking.digitalbooking.domain.service.impl;
 
+import br.com.digitalbooking.digitalbooking.api.dto.request.ReservasRequest;
 import br.com.digitalbooking.digitalbooking.api.dto.response.CidadesResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ReservasResponse;
@@ -12,6 +13,7 @@ import br.com.digitalbooking.digitalbooking.domain.exception.DatasIncorrectExcep
 import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.repository.ProdutosRepository;
 import br.com.digitalbooking.digitalbooking.domain.repository.ReservasRepository;
+import br.com.digitalbooking.digitalbooking.domain.repository.UsuariosRepository;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
 import br.com.digitalbooking.digitalbooking.domain.service.ReservasService;
 import br.com.digitalbooking.digitalbooking.domain.service.UsuariosService;
@@ -32,42 +34,43 @@ public class ReservasServiceImpl implements ReservasService {
     private final ObjectMapper objectMapper;
     private final ProdutosRepository produtosRepository;
     private final UsuariosService usuariosService;
+
+    private final UsuariosRepository usuariosRepository;
     private final ProdutosService produtosService;
 
-    public ReservasServiceImpl(ReservasRepository reservasRepository, ObjectMapper objectMapper, ProdutosRepository produtosRepository, UsuariosService usuariosService, ProdutosService produtosService) {
+    public ReservasServiceImpl(ReservasRepository reservasRepository, ObjectMapper objectMapper, ProdutosRepository produtosRepository, UsuariosService usuariosService, UsuariosRepository usuariosRepository, ProdutosService produtosService) {
         this.reservasRepository = reservasRepository;
         this.objectMapper = objectMapper;
         this.produtosRepository = produtosRepository;
         this.usuariosService = usuariosService;
+        this.usuariosRepository = usuariosRepository;
         this.produtosService = produtosService;
     }
 
     @Override
-    public ReservasResponse criarReserva(ReservasResponse reservasResponse) {
+    public ReservasResponse criarReserva(Reservas request, UUID usuarioId, UUID produtos) {
 
         //Identificar produto, usuário, cidade, status datas inicio e final
-        ProdutosResponse produto = reservasResponse.getProdutosResponse();
-        UsuariosResponse usuario = reservasResponse.getUsuariosResponse();
-        LocalDate dataInicio = reservasResponse.getDataInicio();
-        LocalDate dataFinal = reservasResponse.getDataFinal();
+        LocalDate dataInicio = request.getDataInicio();
+        LocalDate dataFinal = request.getDataFinal();
        // StatusReservas status = reservasResponse.getStatus();
         //CidadesResponse cidade = reservasResponse.getCidade();
 
         // Verificar se existe produto
 
-        Optional<Produtos> produtoIdentificado = produtosRepository.findById(produto.getId());
+        Optional<Produtos> produtoIdentificado = produtosRepository.findById(produtos);
 
         if (produtoIdentificado.isEmpty()) {
-            throw new NotFoundException(produto.getId());
+            throw new NotFoundException(produtos);
         }
 
         //verificar se o usuario existe
 
-        Usuarios usuarioIdentificado = usuariosService.buscarUsuarioPorId(usuario.getId());
+        Usuarios usuarioIdentificado = usuariosService.buscarUsuarioPorId(usuarioId);
 
         if (usuarioIdentificado == null) {
 
-            throw new NotFoundException(usuario.getId());
+            throw new NotFoundException(usuarioId);
         }
 
         // verificar se existem datas
@@ -83,9 +86,13 @@ public class ReservasServiceImpl implements ReservasService {
             throw new DatasIncorrectException("Data da reserva não pode ser anterior a data de hoje ou para o mesmo dia");
          }
 
-        Reservas reservas = objectMapper.convertValue(reservasResponse, Reservas.class);
-        Reservas registrado = reservasRepository.save(reservas);
-        ReservasResponse reservasResponseRegistrado = objectMapper.convertValue(registrado, ReservasResponse.class);
+         Produtos produtoIdentificar = produtosRepository.findById(produtos).orElseThrow();
+         request.setProdutos(produtoIdentificar);
+
+         Usuarios usuarioIdentificar = usuariosRepository.findUsuarioById(usuarioId).orElseThrow();
+         request.setUsuarioId(usuarioIdentificar);
+         Reservas registrado = reservasRepository.save(request);
+         ReservasResponse reservasResponseRegistrado = objectMapper.convertValue(registrado, ReservasResponse.class);
 
         return reservasResponseRegistrado;
     }

@@ -21,9 +21,8 @@ public class ReservasResponse {
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private StatusReservas status;
-    private ProdutosResponse produtosResponse;
-    private UsuariosResponse usuariosResponse;
-    private CidadesResponse cidade;
+    private UUID produtos;
+    private UUID usuarioId;
     
     public ReservasResponse () {
         
