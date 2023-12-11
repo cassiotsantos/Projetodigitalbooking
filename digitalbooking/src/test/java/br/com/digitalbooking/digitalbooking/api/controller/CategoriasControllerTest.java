@@ -9,7 +9,6 @@ import br.com.digitalbooking.digitalbooking.domain.service.impl.CategoriasServic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -22,9 +21,9 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,6 +37,7 @@ class CategoriasControllerTest {
   @Autowired
   ObjectMapper mapper;
 
+
   @MockBean
   CategoriasServiceImpl categoriasService;
 
@@ -50,7 +50,7 @@ class CategoriasControllerTest {
 
   @Test
   @WithMockUser
-  void buscarCategoriasPorId() throws Exception {
+  void shouldGetByIdCategorySuccessfully() throws Exception {
 
     UUID uuid = UUID.randomUUID();
 
@@ -85,7 +85,7 @@ class CategoriasControllerTest {
 
   @Test
   @WithMockUser
-  void buscarCategorias() throws Exception {
+  void shouldGetListCategorySuccessfully() throws Exception {
 
     List<Categorias> categorias = List.of(
         new Categorias(
@@ -141,8 +141,7 @@ class CategoriasControllerTest {
 
   @Test
   @WithMockUser
-  @AutoConfigureMockMvc(addFilters = false)
-  void criarCategorias() throws Exception {
+  void shouldCreateCategorySuccessfully() throws Exception {
     CategoriasRequest request = new CategoriasRequest(
         "Teste",
         "Teste",
@@ -182,5 +181,54 @@ class CategoriasControllerTest {
             .value(categorias.getQualificacao().toString()))
         .andExpect(jsonPath("$.createdAt")
             .exists());
+  }
+
+  @Test
+  @WithMockUser
+  void shouldUpdateCategorySuccessfully() throws Exception {
+    UUID uuid = UUID.randomUUID();
+
+    CategoriasRequest newCategoryDetails = new CategoriasRequest("NewName", "NewUrl", "NewDescription",
+        EnumQualificacao.DOIS, LocalDateTime.now());
+
+    Categorias newCategory = new Categorias(uuid, newCategoryDetails.getNome(), newCategoryDetails.getUrlImage(),
+        newCategoryDetails.getDescricao(), newCategoryDetails.getQualificacao(), newCategoryDetails.getCreatedAt());
+
+    given(categoriasService.atualizarCategoria(uuid, newCategory))
+        .willReturn(newCategory);
+
+    given(categoriasService.buscarCategoriasPorId(uuid))
+        .willReturn(newCategory);
+
+    ResultActions response = mockMvc
+        .perform(put("/v1/categorias/{id}", uuid)
+            .with(csrf())
+            .contentType("application/json")
+            .content(mapper.writeValueAsString(newCategoryDetails)));
+
+    response
+        .andExpect(status().isOk())
+        .andDo(print())
+        .andExpect(jsonPath("$.id").value(newCategory.getId().toString()))
+        .andExpect(jsonPath("$.nome").value(newCategory.getNome()))
+        .andExpect(jsonPath("$.urlImage").value(newCategory.getUrlImage()))
+        .andExpect(jsonPath("$.descricao").value(newCategory.getDescricao()))
+        .andExpect(jsonPath("$.qualificacao").value(newCategory.getQualificacao().toString()))
+        .andExpect(jsonPath("$.createdAt").exists());
+  }
+
+  @Test
+  @WithMockUser
+  void shouldDeleteCategorySuccessfully() throws Exception {
+
+    UUID uuid = UUID.randomUUID();
+
+    doNothing().when(categoriasService).deletarCategoria(uuid);
+
+    ResultActions response = mockMvc
+        .perform(delete("/v1/categorias/{id}", uuid)
+            .with(csrf()));
+
+    response.andExpect(status().isOk());
   }
 }

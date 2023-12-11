@@ -88,7 +88,7 @@ public class CaracteristicasController {
   }
 
   //Método atualizar
-  @PutMapping("id")
+  @PutMapping("{id}")
   ResponseEntity<?> atualizarCaracteristicas(@PathVariable UUID id, @RequestBody @Valid CaracteristicasRequest request) {
 
     Caracteristicas caracteristicas = caracteristicasService.buscarCaracteristicasPorId(id);

@@ -4,20 +4,23 @@ import br.com.digitalbooking.digitalbooking.api.dto.response.CaracteristicasResp
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.CaracteristicasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.CaracteristicasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
+import br.com.digitalbooking.digitalbooking.domain.service.JwtService;
+import br.com.digitalbooking.digitalbooking.domain.service.UserService;
 import br.com.digitalbooking.digitalbooking.domain.service.impl.CaracteristicasServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,9 +35,17 @@ class CaracteristicasControllerTest {
   ObjectMapper mapper;
 
   @MockBean
+  JwtService jwtService;
+
+  @MockBean
+  UserService userService;
+
+  @MockBean
   CaracteristicasServiceImpl service;
 
-  void buscarCaracteristicasPorId() throws Exception {
+  @Test
+  @WithMockUser
+  void shouldGetByIdCaracteristicasSuccessfully() throws Exception {
 
     var caracteristica1 = new Caracteristicas(
         UUID.randomUUID(),
@@ -66,7 +77,8 @@ class CaracteristicasControllerTest {
   }
 
   @Test
-  void buscarCaracteristicas() throws Exception {
+  @WithMockUser
+  void shouldGetListCaracteristicasSuccessfully() throws Exception {
     var wrapper = new CaracteristicasWrapperResponse(
         List.of(
             new CaracteristicasListResponse(
@@ -143,7 +155,8 @@ class CaracteristicasControllerTest {
   }
 
   @Test
-  void criarCaracteristicas() throws Exception {
+  @WithMockUser
+  void shouldCreateCaracteristicasSuccessfully() throws Exception {
     var caracteristica1 = new Caracteristicas(
         UUID.randomUUID(),
         "nome1",
@@ -166,6 +179,7 @@ class CaracteristicasControllerTest {
     var response = mockMvc
         .perform(
             post("/v1/caracteristicas")
+                .with(csrf())
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(caracteristicaRequest1))
         );
@@ -182,12 +196,33 @@ class CaracteristicasControllerTest {
   }
 
   @Test
-  void atualizarCaracteristicas() {
+  @WithMockUser
+  void shouldUpdateCaracteristicasSuccessfully() throws Exception {
 
+    var caracteristicaToUpdate = new Caracteristicas(UUID.randomUUID(), "nome1", "icone1");
+
+    var newCaracteristica = new Caracteristicas(UUID.randomUUID(), "nome2", "icone2");
+
+    given(service.buscarCaracteristicasPorId(caracteristicaToUpdate.getId()))
+        .willReturn(caracteristicaToUpdate);
+    given(service.atualizarCaracteristicas(caracteristicaToUpdate.getId(), caracteristicaToUpdate))
+        .willReturn(newCaracteristica);
+
+    var response = mockMvc
+        .perform(put("/v1/caracteristicas/{id}", caracteristicaToUpdate.getId())
+            .with(csrf())
+            .contentType("application/json")
+            .content(mapper.writeValueAsString(newCaracteristica)));
+
+    response.andExpect(status().isOk())
+        .andDo(print())
+        .andExpect(jsonPath("$.id").value(newCaracteristica.getId().toString()))
+        .andExpect(jsonPath("$.nome").value(newCaracteristica.getNome()))
+        .andExpect(jsonPath("$.icone").value(newCaracteristica.getIcone()));
 
   }
 
   @Test
-  void deletarCaracteristicas() {
+  void shouldDeleteCaracteristicasSuccessfully() {
   }
 }
