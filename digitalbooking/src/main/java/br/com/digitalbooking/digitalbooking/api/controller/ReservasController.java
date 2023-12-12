@@ -2,6 +2,8 @@ package br.com.digitalbooking.digitalbooking.api.controller;
 
 import br.com.digitalbooking.digitalbooking.api.dto.request.ReservasRequest;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ReservasResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ReservasListResponse;
+import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ReservasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Reservas;
 import br.com.digitalbooking.digitalbooking.domain.service.ReservasService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,10 +12,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -40,16 +42,28 @@ public class ReservasController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservasResponse);
     }
 
-    //Inserir
 
-    /*
-    @PostMapping
-    ResponseEntity<ReservasResponse> criarReservas(@RequestBody @Valid ReservasRequest request){
-        Reservas reservas = objectMapper.convertValue(request,Reservas.class);
-        Reservas reservaCriada = reservasService.criarReserva(reservas);
-        ReservasResponse reservasResponse = objectMapper.convertValue(reservaCriada, ReservasResponse.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservasResponse);
-    }*/
+    // Método Buscar Reserva por produto
+    @GetMapping("/porproduto/{produto}")
+    ResponseEntity<ReservasWrapperResponse> listaReservasPorProduto(@PathVariable UUID produto){
+        List<Reservas> reservas = reservasService.findByProdutosId(produto);
+        ReservasWrapperResponse reservasWrapperResponse = new ReservasWrapperResponse();
+        reservasWrapperResponse.setReservas(
+                reservas.stream()
+                        .map(reserva -> {
+                            ReservasListResponse.setHoraInicio(reserva.getHoraInicio());
+                            ReservasListResponse.setDataInicio(reserva.getDataInicio());
+                            ReservasListResponse.setDataFinal(reserva.getDataFinal());
+                            ReservasListResponse.setStatus(reserva.getStatus());
+                            //List
+                            ReservasListResponse.setProdutosId(reserva.getProdutosId());
+                            ReservasListResponse.setUsuariosId(reserva.getUsuariosId());
+                            return reservasLissResponse;
+                        }).toList());
+        return ResponseEntity.ok(reservasWrapperResponse);
+    }
+
+
 
 
 
