@@ -68,8 +68,8 @@ public class ReservasController {
 
     @Operation(summary = "Listar resersas por produto ou usuário")
     @GetMapping({"id"})
-    public ResponseEntity<List<ReservasWrapperResponse>> listarPorProdutos(@RequestParam(required = false) UUID usuarioId,
-                                                                           @RequestParam(required = false) UUID produtoId) {
+    public ResponseEntity<List<ReservasWrapperResponse>> listarPorProdutos(@PathVariable(required = false) UUID usuarioId,
+                                                                           @PathVariable(required = false) UUID produtoId) {
 
         if (produtoId != null){
             return new ResponseEntity<>(reservasService.findByProdutosId(produtoId), HttpStatus.OK);
