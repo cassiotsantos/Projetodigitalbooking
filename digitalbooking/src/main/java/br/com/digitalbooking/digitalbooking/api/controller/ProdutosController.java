@@ -4,9 +4,9 @@ import br.com.digitalbooking.digitalbooking.api.dto.request.ProdutosRequest;
 import br.com.digitalbooking.digitalbooking.api.dto.response.ProdutosResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ProdutosListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ProdutosWrapperResponse;
-import br.com.digitalbooking.digitalbooking.domain.entity.Caracteristicas;
-import br.com.digitalbooking.digitalbooking.domain.entity.Imagens;
-import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
+import br.com.digitalbooking.digitalbooking.domain.entity.*;
+import br.com.digitalbooking.digitalbooking.domain.service.CategoriasService;
+import br.com.digitalbooking.digitalbooking.domain.service.CidadesService;
 import br.com.digitalbooking.digitalbooking.domain.service.ProdutosService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,11 +28,16 @@ import java.util.stream.Collectors;
 public class ProdutosController {
         private final ObjectMapper objectMapper;
         private final ProdutosService produtosService;
+        private final CidadesService cidadesService;
+
+        private final CategoriasService categoriasService;
 
         @Autowired
-        public ProdutosController(ObjectMapper objectMapper, ProdutosService produtosService) {
+        public ProdutosController(ObjectMapper objectMapper, ProdutosService produtosService, CidadesService cidadesService, CategoriasService categoriasService) {
             this.objectMapper = objectMapper;
             this.produtosService = produtosService;
+            this.cidadesService = cidadesService;
+            this.categoriasService = categoriasService;
         }
 
         //Buscar por ID
@@ -115,7 +120,7 @@ public class ProdutosController {
         }
 
         //Método atualizar
-       /* @PutMapping("id")
+       @PutMapping("id")
         ResponseEntity<ProdutosResponse> atualizarProduto(@PathVariable UUID id, @RequestBody @Valid ProdutosRequest request){
 
             Produtos produtos = produtosService.buscarProdutoPorId(id);
@@ -125,15 +130,16 @@ public class ProdutosController {
             produtos.setLatitude(request.getLatitude());
             produtos.setLongitude(request.getLongitude());
 
-            Cidades cidades = new Cidades();
-            cidades.setNome(request.getCidades().getNome());
-            cidades.setPais(request.getCidades().getPais());
-
+            Cidades cidades = cidadesService.buscarCidadePorId(request.getCidadesId());
             produtos.setCidades(cidades);
+
+           Categorias categorias = categoriasService.buscarCategoriasPorId(request.getCidadesId());
+           produtos.setCategorias(categorias);
+
 
             Produtos produtoAtualizado = produtosService.atualizarProduto(id, produtos);
             ProdutosResponse response = produtosResponseByProdutos(produtoAtualizado);
-            return ResponseEntity.ok(response);        }*/
+            return ResponseEntity.ok(response);        }
 
         // Método de buscar Produto por categoria
         @GetMapping("/porcategoria/{nome}")
