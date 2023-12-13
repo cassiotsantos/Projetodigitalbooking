@@ -46,45 +46,64 @@ public class ReservasController {
 
 
     // Método Buscar Reserva por produto
-   /* @GetMapping("/porproduto/{produto}")
+    @GetMapping("/porproduto/{produto}")
     ResponseEntity<ReservasWrapperResponse> listaReservasPorProduto(@PathVariable UUID produto){
         List<Reservas> reservas = reservasService.findByProdutosId(produto);
         ReservasWrapperResponse reservasWrapperResponse = new ReservasWrapperResponse();
         reservasWrapperResponse.setReservas(
                 reservas.stream()
                         .map(reserva -> {
-                            ReservasListResponse.setHoraInicio(reserva.getHoraInicio());
-                            ReservasListResponse.setDataInicio(reserva.getDataInicio());
-                            ReservasListResponse.setDataFinal(reserva.getDataFinal());
-                            ReservasListResponse.setStatus(reserva.getStatus());
-                            //List
-                            ReservasListResponse.setProdutosId(reserva.getProdutosId());
-                            ReservasListResponse.setUsuariosId(reserva.getUsuariosId());
-                            return reservasLissResponse;
+                            ReservasListResponse reservasListResponse = new ReservasListResponse();
+                            reservasListResponse.setId(reserva.getId());
+                            reservasListResponse.setHoraInicio(reserva.getHoraInicio());
+                            reservasListResponse.setDataInicio(reserva.getDataInicio());
+                            reservasListResponse.setDataFinal(reserva.getDataFinal());
+                            reservasListResponse.setStatus(reserva.getStatus());
+                            reservasListResponse.setProdutosId(reserva.getProdutos().getId());
+                            reservasListResponse.setUsuariosId(reserva.getUsuarioId().getId());
+                            return reservasListResponse;
+
                         }).toList());
+
         return ResponseEntity.ok(reservasWrapperResponse);
-    }*/
-
-
-    @Operation(summary = "Listar resersas por produto ou usuário")
-    @GetMapping({"id"})
-    public ResponseEntity<List<ReservasWrapperResponse>> listarPorProdutos(@PathVariable(required = false) UUID usuarioId,
-                                                                           @PathVariable(required = false) UUID produtoId) {
-
-        if (produtoId != null){
-            return new ResponseEntity<>(reservasService.findByProdutosId(produtoId), HttpStatus.OK);
-        }
-        else if(usuarioId != null){
-            return new ResponseEntity<>(reservasService.findByUsuarioId(usuarioId), HttpStatus.OK);
-        }
-        else {
-            throw new SearchException("Não especificou a busca");
-        }
-
     }
 
+    @GetMapping("/porusuario/{usuario}")
+    ResponseEntity<ReservasWrapperResponse> listaReservasPorUsuario(@PathVariable UUID usuario){
+        List<Reservas> reservas = reservasService.findByUsuarioIdId(usuario);
+        ReservasWrapperResponse reservasWrapperResponse = new ReservasWrapperResponse();
+        reservasWrapperResponse.setReservas(
+                reservas.stream()
+                        .map(reserva -> {
+                            ReservasListResponse reservasListResponse = new ReservasListResponse();
+                            reservasListResponse.setId(reserva.getId());
+                            reservasListResponse.setHoraInicio(reserva.getHoraInicio());
+                            reservasListResponse.setDataInicio(reserva.getDataInicio());
+                            reservasListResponse.setDataFinal(reserva.getDataFinal());
+                            reservasListResponse.setStatus(reserva.getStatus());
+                            reservasListResponse.setProdutosId(reserva.getProdutos().getId());
+                            reservasListResponse.setUsuariosId(reserva.getUsuarioId().getId());
+                            return reservasListResponse;
+                        }).toList());
+            return ResponseEntity.ok(reservasWrapperResponse);
+        }
 
 
+//    @Operation(summary = "Listar resersas por produto ou usuário")
+//    @GetMapping({"id"})
+//    public ResponseEntity<List<ReservasWrapperResponse>> listarPorProdutos(@RequestParam(required = false) UUID usuarioId,
+//                                                                           @RequestParam(required = false) UUID produtoId) {
+//
+//        if (produtoId != null){
+//            return new ResponseEntity<>(reservasService.findByProdutosId(produtoId), HttpStatus.OK);
+//        }
+//        else if(usuarioId != null){
+//            return new ResponseEntity<>(reservasService.findByUsuarioId(usuarioId), HttpStatus.OK);
+//        }
+//        else {
+//            throw new SearchException("Não especificou a busca");
+//        }
+//
+//    }
 
-
-}
+    }

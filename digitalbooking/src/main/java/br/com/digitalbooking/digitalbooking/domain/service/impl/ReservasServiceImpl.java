@@ -83,24 +83,35 @@ public class ReservasServiceImpl implements ReservasService {
         return reservasRepository.save(request);
     }
 
-    @Override
-    public List<ReservasWrapperResponse> findByProdutosId(UUID produtoId) {
-
-            List<Reservas> reservas = reservasRepository.findByProdutosId(produtoId);
-            List<ReservasWrapperResponse> responses = new ArrayList<>();
-            for (Reservas reserva: reservas) {
-                responses.add(objectMapper.convertValue(reserva, ReservasWrapperResponse.class));
-            }
-              return responses;}
 
     @Override
-    public List<ReservasWrapperResponse> findByUsuarioId(UUID usuarioId) {
+    public List<Reservas> findByProdutosId(UUID produtoId) {
+        return reservasRepository.findByProdutosId(produtoId);
+    }
 
-            List<Reservas> reservas =reservasRepository.findByUsuarioId(usuarioId);
-            List<ReservasWrapperResponse> responses = new ArrayList<>();
-            for (Reservas reserva:reservas){
-                responses.add(objectMapper.convertValue(reserva, ReservasWrapperResponse.class));
-            }
-              return responses;}
+    @Override
+    public List<Reservas> findByUsuarioIdId(UUID usuarioId) {
+        return reservasRepository.findByUsuarioIdId(usuarioId);
+    }
+
+//    @Override
+//    public List<ReservasWrapperResponse> findByProdutosId(UUID produtoId) {
+//
+//            List<Reservas> reservas = reservasRepository.findByProdutosId(produtoId);
+//            List<ReservasWrapperResponse> responses = new ArrayList<>();
+//            for (Reservas reserva: reservas) {
+//                responses.add(objectMapper.convertValue(reserva, ReservasWrapperResponse.class));
+//            }
+//              return responses;}
+//
+//    @Override
+//    public List<ReservasWrapperResponse> findByUsuarioId(UUID usuarioId) {
+//
+//            List<Reservas> reservas =reservasRepository.findByUsuarioId(usuarioId);
+//            List<ReservasWrapperResponse> responses = new ArrayList<>();
+//            for (Reservas reserva:reservas){
+//                responses.add(objectMapper.convertValue(reserva, ReservasWrapperResponse.class));
+//            }
+//              return responses;}
 
 }

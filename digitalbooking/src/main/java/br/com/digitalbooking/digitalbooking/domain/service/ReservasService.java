@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface ReservasService {
     Reservas criarReserva (Reservas request, UUID usuarioId, UUID produtos);
-    List<ReservasWrapperResponse> findByProdutosId (UUID produtoId);
-    List<ReservasWrapperResponse> findByUsuarioId(UUID usuarioId);
+    List<Reservas> findByProdutosId (UUID produtoId);
+    List<Reservas> findByUsuarioIdId(UUID usuarioId);
 
 }
