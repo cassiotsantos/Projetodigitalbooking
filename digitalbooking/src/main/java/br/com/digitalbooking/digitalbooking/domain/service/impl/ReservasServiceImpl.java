@@ -1,5 +1,7 @@
 package br.com.digitalbooking.digitalbooking.domain.service.impl;
 
+import br.com.digitalbooking.digitalbooking.api.dto.request.ReservasRequest;
+import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ReservasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Produtos;
 import br.com.digitalbooking.digitalbooking.domain.entity.Reservas;
 import br.com.digitalbooking.digitalbooking.domain.entity.Usuarios;
@@ -17,6 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -81,11 +84,23 @@ public class ReservasServiceImpl implements ReservasService {
     }
 
     @Override
-    public List<Reservas> findByProdutosId(UUID produtoId) {
-              return reservasRepository.findByProdutosId(produtoId);}
+    public List<ReservasWrapperResponse> findByProdutosId(UUID produtoId) {
+
+            List<Reservas> reservas = reservasRepository.findByProdutosId(produtoId);
+            List<ReservasWrapperResponse> responses = new ArrayList<>();
+            for (Reservas reserva: reservas) {
+                responses.add(objectMapper.convertValue(reserva, ReservasWrapperResponse.class));
+            }
+              return responses;}
 
     @Override
-    public List<Reservas> findByUsuarioId(Usuarios usuarioId) {
-              return reservasRepository.findByUsuarioId(usuarioId);}
+    public List<ReservasWrapperResponse> findByUsuarioId(UUID usuarioId) {
+
+            List<Reservas> reservas =reservasRepository.findByUsuarioId(usuarioId);
+            List<ReservasWrapperResponse> responses = new ArrayList<>();
+            for (Reservas reserva:reservas){
+                responses.add(objectMapper.convertValue(reserva, ReservasWrapperResponse.class));
+            }
+              return responses;}
 
 }

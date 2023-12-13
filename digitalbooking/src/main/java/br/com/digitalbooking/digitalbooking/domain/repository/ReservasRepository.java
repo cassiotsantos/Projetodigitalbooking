@@ -14,6 +14,6 @@ public interface ReservasRepository extends JpaRepository <Reservas, UUID> {
 
     List<Reservas> findByProdutosId(UUID produtoId);
     @Query("select r from Reservas r where r.usuarioId = ?1")
-    List<Reservas> findByUsuarioId(Usuarios usuarioid);
+    List<Reservas> findByUsuarioId(UUID usuarioid);
 
 }

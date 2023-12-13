@@ -5,8 +5,10 @@ import br.com.digitalbooking.digitalbooking.api.dto.response.ReservasResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.listresponse.ReservasListResponse;
 import br.com.digitalbooking.digitalbooking.api.dto.response.wrapperresponse.ReservasWrapperResponse;
 import br.com.digitalbooking.digitalbooking.domain.entity.Reservas;
+import br.com.digitalbooking.digitalbooking.domain.exception.SearchException;
 import br.com.digitalbooking.digitalbooking.domain.service.ReservasService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class ReservasController {
 
 
     // Método Buscar Reserva por produto
-    @GetMapping("/porproduto/{produto}")
+   /* @GetMapping("/porproduto/{produto}")
     ResponseEntity<ReservasWrapperResponse> listaReservasPorProduto(@PathVariable UUID produto){
         List<Reservas> reservas = reservasService.findByProdutosId(produto);
         ReservasWrapperResponse reservasWrapperResponse = new ReservasWrapperResponse();
@@ -61,6 +63,24 @@ public class ReservasController {
                             return reservasLissResponse;
                         }).toList());
         return ResponseEntity.ok(reservasWrapperResponse);
+    }*/
+
+
+    @Operation(summary = "Listar resersas por produto ou usuário")
+    @GetMapping
+    public ResponseEntity<List<ReservasWrapperResponse>> listarPorProdutos(@RequestParam(required = false) UUID usuarioId,
+                                                                           @RequestParam(required = false) UUID produtoId) {
+
+        if (produtoId != null){
+            return new ResponseEntity<>(reservasService.findByProdutosId(produtoId), HttpStatus.OK);
+        }
+        else if(usuarioId != null){
+            return new ResponseEntity<>(reservasService.findByUsuarioId(usuarioId), HttpStatus.OK);
+        }
+        else {
+            throw new SearchException("Não especificou a busca");
+        }
+
     }
 
 

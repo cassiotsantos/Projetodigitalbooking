@@ -3,6 +3,7 @@ package br.com.digitalbooking.digitalbooking.api.handler;
 import br.com.digitalbooking.digitalbooking.domain.exception.DatasIncorrectException;
 import br.com.digitalbooking.digitalbooking.domain.exception.NotFoundException;
 import br.com.digitalbooking.digitalbooking.domain.exception.RegisteredUserException;
+import br.com.digitalbooking.digitalbooking.domain.exception.SearchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,4 +33,12 @@ public class ExpectionApiHandler {
         Problem problem = new Problem(HttpStatus.BAD_REQUEST.value(),message, e.getMessage());
         return ResponseEntity.ok().body(problem);
     }
+
+    @ExceptionHandler(SearchException.class)
+    public ResponseEntity<Problem> searchException(SearchException e){
+        String message = "Não específicou a busca";
+        Problem problem = new Problem(HttpStatus.NOT_FOUND.value(),message, e.getMessage());
+        return ResponseEntity.ok().body(problem);
+    }
+
 }

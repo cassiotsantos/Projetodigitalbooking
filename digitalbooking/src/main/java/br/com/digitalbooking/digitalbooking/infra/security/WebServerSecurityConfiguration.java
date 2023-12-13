@@ -38,6 +38,8 @@ public class WebServerSecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,"/v1/categorias/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/caracteristicas/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/cidades/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "v1/reservas/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "v1/reservas/**").permitAll()
                         .requestMatchers("/v1/authentication/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/v1/usuarios").hasRole("ADMIN")
                         .anyRequest().authenticated()
