@@ -67,7 +67,7 @@ public class ReservasController {
 
 
     @Operation(summary = "Listar resersas por produto ou usuário")
-    @GetMapping
+    @GetMapping({"id"})
     public ResponseEntity<List<ReservasWrapperResponse>> listarPorProdutos(@RequestParam(required = false) UUID usuarioId,
                                                                            @RequestParam(required = false) UUID produtoId) {
 

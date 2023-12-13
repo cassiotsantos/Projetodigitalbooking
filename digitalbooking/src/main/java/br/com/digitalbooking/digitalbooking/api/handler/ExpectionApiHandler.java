@@ -37,7 +37,7 @@ public class ExpectionApiHandler {
     @ExceptionHandler(SearchException.class)
     public ResponseEntity<Problem> searchException(SearchException e){
         String message = "Não específicou a busca";
-        Problem problem = new Problem(HttpStatus.NOT_FOUND.value(),message, e.getMessage());
+        Problem problem = new Problem(HttpStatus.NO_CONTENT.value(),message, e.getMessage());
         return ResponseEntity.ok().body(problem);
     }
 
