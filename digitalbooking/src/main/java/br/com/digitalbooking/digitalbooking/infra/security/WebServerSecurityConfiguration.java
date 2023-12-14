@@ -17,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,21 +36,36 @@ public class WebServerSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/imagens/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/produtos/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/categorias/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/caracteristicas/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/cidades/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "v1/reservas/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "v1/reservas/**").permitAll()
                         .requestMatchers("/v1/authentication/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/v1/usuarios").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/v1/reservas/porproduto/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/v1/reservas/porusuario/**").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/v1/reservas").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/v1/produtos").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/v1/caracteristicas").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/v1/imagens").authenticated()
+                        .requestMatchers("/v1/usuarios").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
+    }
+    @Bean
+    public CorsFilter corsFilter(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
     @Bean

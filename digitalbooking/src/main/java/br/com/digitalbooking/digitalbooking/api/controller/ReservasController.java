@@ -58,7 +58,7 @@ public class ReservasController {
                             reservasListResponse.setHoraInicio(reserva.getHoraInicio());
                             reservasListResponse.setDataInicio(reserva.getDataInicio());
                             reservasListResponse.setDataFinal(reserva.getDataFinal());
-                            reservasListResponse.setStatus(reserva.getStatus());
+                            reservasListResponse.setStatus(reserva.getStatus().getStatus());
                             reservasListResponse.setProdutosId(reserva.getProdutos().getId());
                             reservasListResponse.setUsuariosId(reserva.getUsuarioId().getId());
                             return reservasListResponse;
@@ -80,7 +80,7 @@ public class ReservasController {
                             reservasListResponse.setHoraInicio(reserva.getHoraInicio());
                             reservasListResponse.setDataInicio(reserva.getDataInicio());
                             reservasListResponse.setDataFinal(reserva.getDataFinal());
-                            reservasListResponse.setStatus(reserva.getStatus());
+                            reservasListResponse.setStatus(reserva.getStatus().getStatus());
                             reservasListResponse.setProdutosId(reserva.getProdutos().getId());
                             reservasListResponse.setUsuariosId(reserva.getUsuarioId().getId());
                             return reservasListResponse;

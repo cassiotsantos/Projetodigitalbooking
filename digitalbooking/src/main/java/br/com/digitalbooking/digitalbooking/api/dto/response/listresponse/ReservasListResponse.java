@@ -15,7 +15,7 @@ public class ReservasListResponse {
     private LocalTime horaInicio;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
-    private StatusReservas status;
+    private String status;
     private UUID produtosId;
     private UUID usuariosId;
 
