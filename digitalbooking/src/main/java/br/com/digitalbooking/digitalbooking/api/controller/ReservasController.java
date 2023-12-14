@@ -88,6 +88,13 @@ public class ReservasController {
             return ResponseEntity.ok(reservasWrapperResponse);
         }
 
+    //Método deletar
+    @DeleteMapping("{id}")
+    ResponseEntity<Void> eletarReserva(@PathVariable UUID id){
+        reservasService.deletarReserva(id);
+        return ResponseEntity.ok().build();
+    }
+
 
 //    @Operation(summary = "Listar resersas por produto ou usuário")
 //    @GetMapping({"id"})

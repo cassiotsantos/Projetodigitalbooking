@@ -133,9 +133,8 @@ public class ProdutosController {
             Cidades cidades = cidadesService.buscarCidadePorId(request.getCidadesId());
             produtos.setCidades(cidades);
 
-           Categorias categorias = categoriasService.buscarCategoriasPorId(request.getCidadesId());
-           produtos.setCategorias(categorias);
-
+            Categorias categorias = categoriasService.buscarCategoriasPorId(request.getCidadesId());
+            produtos.setCategorias(categorias);
 
             Produtos produtoAtualizado = produtosService.atualizarProduto(id, produtos);
             ProdutosResponse response = produtosResponseByProdutos(produtoAtualizado);
