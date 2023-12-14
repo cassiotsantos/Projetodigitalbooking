@@ -11,5 +11,6 @@ public interface ReservasService {
     Reservas criarReserva (Reservas request, UUID usuarioId, UUID produtos);
     List<Reservas> findByProdutosId (UUID produtoId);
     List<Reservas> findByUsuarioIdId(UUID usuarioId);
+    void deletarReserva(UUID id);
 
 }

@@ -94,6 +94,14 @@ public class ReservasServiceImpl implements ReservasService {
         return reservasRepository.findByUsuarioIdId(usuarioId);
     }
 
+    @Override
+    public void deletarReserva(UUID id) {
+        try{reservasRepository.findById(id).orElseThrow();
+            reservasRepository.deleteById(id);}
+        catch(Exception e) {throw new NotFoundException(id);}
+    }
+    }
+
 //    @Override
 //    public List<ReservasWrapperResponse> findByProdutosId(UUID produtoId) {
 //
@@ -114,4 +122,4 @@ public class ReservasServiceImpl implements ReservasService {
 //            }
 //              return responses;}
 
-}
+
